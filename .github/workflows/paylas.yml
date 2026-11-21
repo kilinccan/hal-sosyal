@@ -1,7 +1,7 @@
 name: paylas
 on:
   schedule:
-    - cron: "7 6,10,18 * * *" # 09:07, 13:07, 21:07 TR (paylas.py SAATLER)
+    - cron: "7 6,8,10,15,18 * * *" # 09:07, 11:07, 13:07, 18:07, 21:07 TR (paylas.py SAATLER)
   workflow_dispatch:
     inputs:
       islem:
