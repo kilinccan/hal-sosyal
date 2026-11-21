@@ -28,3 +28,4 @@ jobs:
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           PAGES_URL: ${{ vars.PAGES_URL }}
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
