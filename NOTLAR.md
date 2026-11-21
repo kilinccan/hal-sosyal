@@ -1,3 +1,6 @@
+2026-11-21 · Son rapor: 3 gönderi, kazanan Reels 1.339 erişim/21 kaydetme; 22-24 Kas kuyruğu 15/15 dolu, --kuru geçti.
+2026-11-21 · 22 ve 24 Kas 18:00 hikâyeleri yer değiştirdi (aynı gün aynı video tekrarı giderildi); medya havuzu 10 video, hikâye aralığı 24→27 Kas 3 gün.
+2026-11-21 · Denetim: 1. tur 13 ONAY/2 RET (aynı gün tekrar), düzeltme sonrası 2/2 ONAY. OWNER: yeni sesli video üretimi gerekli (havuz dar).
 2026-11-22 · Rapor 01:20: 1.714 erişim / 7 profil ziyareti / 3 takipçi; kazanan Reels 1.339 erişim, 21 kaydetme. Darboğaz: izleyen profile geçmiyor.
 2026-11-22 · 22 Kas-6 Ara tüm altyazılara dönüşümlü takip çağrısı (2. satır, 3 varyant). Yeni altyazıda da 2. satıra takip çağrısı koy.
 2026-11-22 · 30 Kas-6 Ara 13:00 sesli Reels ile, 29 Kas/1/3/5/6 Ara 21:00 boşlukları onaylı carousel'larla dolduruldu (kuru geçti).
