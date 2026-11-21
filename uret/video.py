@@ -90,6 +90,11 @@ VIDEOS = {
     "3-yakinim": [(hook("Dua ederken kendini uzak mı hissediyorsun?"), 2.8), *ayet_seq("2:186"), (CTA, 3.5)],
     "4-kalpler": [(hook("İçin daralıyorsa"), 2.0), *ayet_seq("13:28"), (CTA, 3.5)],
     "5-yalniz-degilsin": [(hook("Kendini yalnız mı hissediyorsun?"), 2.3), *ayet_seq("93:3"), (CTA, 3.5)],
+    "6-korkma": [(hook("Bir şeyden korkuyor musun?"), 2.3), *ayet_seq("20:46"), (CTA, 3.5)],
+    "7-umit": [(hook("Kendini affedemiyor musun?"), 2.3), *ayet_seq("39:53"), (CTA, 3.5)],
+    "8-yakin": [(hook("Kimse seni anlamıyor gibi mi?"), 2.3), *ayet_seq("50:16"), (CTA, 3.5)],
+    "9-say": [(hook("Hiç saymaya çalıştın mı?"), 2.3), *ayet_seq("16:18"), (CTA, 3.5)],
+    "10-dinlen": [(hook("Biraz dinlenmeye ihtiyacın mı var?"), 2.5), *ayet_seq("28:73"), (CTA, 3.5)],
 }
 
 

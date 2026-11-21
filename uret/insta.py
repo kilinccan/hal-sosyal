@@ -1,4 +1,4 @@
-"""Instagram gönderileri (3:4, 1080x1440): meme karesi + ayet kartı + tanıtım.
+"""Instagram gönderileri (4:5, 1080x1350; API 3:4 kabul etmez): meme karesi + ayet kartı + tanıtım.
 Kullanım: python -X utf8 -I insta.py  (çıktı: medya/instagram/)"""
 import shutil, subprocess, sys, tempfile
 from pathlib import Path
@@ -7,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import video as v  # noqa: E402  (font, ikon, içerik ve yardımcılar)
 
 OUT = v.ROOT / "medya" / "instagram"
-W, H = 1080, 1440
+W, H = 1080, 1350
 e = v.e
 CSS = v.CSS.replace(f"width:{v.W}px;height:{v.H}px", f"width:{W}px;height:{H}px").replace(
     "padding:260px 130px 440px", "padding:120px 110px") + """
@@ -69,7 +69,30 @@ POSTS = {
     "5-bugun-nasilsin": [("", v.hook("Bugün nasılsın?", "Hâline göre bir ayet. Kaydır →")),
                          card("Zor bir gündeysen", "94:5"), card("İçin daralıyorsa", "13:28"),
                          card("Kendini yalnız hissediyorsan", "93:3"), card("Kaygılıysan", "65:3"), CTA],
+    "6-liste": [notes("Bugünün listesi", ["1. İşe yetiş", "2. Eve yetiş", "3. Herkese yetiş", "4. Kendine? Belki yarın"]),
+                card("Kendine fazla yükleniyorsan", "4:28"), CTA],
+    "7-sabir": [bv("Sabırlı biriyim.", "Kargo \"dağıtımda\". 11. kez bakıyorum."),
+                card("Sabrın tükenmek üzereyse", "70:5"), CTA],
+    "8-iyi-gecti": [chat("Arkadaşım", [(False, "Bugün nasıl geçti?"), (True, "Kötü değildi aslında"),
+                                       (False, "Senden duyduğum en olumlu cümle 😄")]),
+                    card("Güzel bir şey olduysa", "93:11"), CTA],
+    "9-gece-1": [kimse("gece 1'de: 3 yıl önce söylediğim bir cümleyi düşünürken", "🙃"),
+                 card("Kalbin yorgunsa", "10:57"), CTA],
+    "10-mesajlar": [notes("Yazıp göndermediğim mesajlar", ["1. \"Tamam.\"", "2. \"Sen bilirsin.\"",
+                                                            "3. \"Ben zaten...\" (silindi)"]),
+                    card("Öfkeliysen", "3:134"), CTA],
 }
+# Tek görsellik sabah kartları (kuyruk tur: gorsel)
+for _ad, _etiket, _k in [
+    ("s-1123", "Endişeliysen", "46:13"), ("s-1124", "Sabrın azalıyorsa", "2:153"),
+    ("s-1125", "Moralin bozuksa", "3:139"), ("s-1126", "Yarını düşünüp daralıyorsan", "93:4"),
+    ("s-1127", "Bugün Cuma", "2:152"), ("s-1128", "Elinden geleni yaptıysan", "33:3"),
+    ("s-1129", "Ümidin azaldıysa", "42:28"), ("s-1130", "Yeni haftaya başlarken", "94:7"),
+    ("s-1201", "Kalbine şifa arıyorsan", "17:82"), ("s-1202", "İçini kimseye dökemiyorsan", "12:86"),
+    ("s-1203", "Yeniden başlamak istiyorsan", "25:70"), ("s-1204", "Bugün Cuma", "7:205"),
+    ("s-1205", "Bir kayıp yaşadıysan", "2:156"), ("s-1206", "Güzel günler bekliyorsan", "93:5"),
+]:
+    POSTS[_ad] = [card(_etiket, _k)]
 
 
 def render(cls, body, png, tmp):

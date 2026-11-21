@@ -1,4 +1,5 @@
-"""Günün kuyruğunu Instagram'da yayınlar. Kullanım: IG_TOKEN=... PAGES_URL=https://kullanici.github.io/hal-sosyal/ python -X utf8 paylas.py [--kuru] [--tarih YYYY-MM-DD]"""
+"""O saatin kuyruğunu Instagram'da yayınlar. Kullanım: IG_TOKEN=... PAGES_URL=https://kullanici.github.io/hal-sosyal/ python -X utf8 paylas.py [--kuru] [--tarih YYYY-MM-DD] [--saat HH]
+Kuyruk: kuyruk/YYYY-MM-DD-HHMM.json (HH ∈ SAATLER); eski YYYY-MM-DD.json 21:00 sayılır."""
 import argparse, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -8,6 +9,7 @@ HESAP = os.environ.get("IG_USER_ID", "")
 ISTANBUL = timezone(timedelta(hours=3))  # Türkiye'de yaz saati yok
 KUYRUK = Path(__file__).resolve().parent / "kuyruk"
 BEKLEME_SN, ZAMAN_ASIMI_SN = 10, 300
+SAATLER = (9, 13, 21)  # paylas.yml cron'u ile aynı (TR saati)
 
 
 class Hata(Exception):
@@ -51,6 +53,10 @@ def planla(kayit, pages):
             plan.append((f"{HESAP}/media", {"image_url": medya_url(pages, d), "is_carousel_item": "true"}))
         kimlikler = ",".join(f"{{c{i}}}" for i in range(len(kayit["dosyalar"])))
         plan.append((f"{HESAP}/media", {"media_type": "CAROUSEL", "children": kimlikler, "caption": kayit["aciklama"]}))
+    elif kayit["tur"] == "gorsel":
+        if len(kayit["dosyalar"]) != 1:
+            raise Hata("görsel için tek dosya gerekir")
+        plan.append((f"{HESAP}/media", {"image_url": medya_url(pages, kayit["dosyalar"][0]), "caption": kayit["aciklama"]}))
     elif kayit["tur"] == "reel":
         if len(kayit["dosyalar"]) != 1:
             raise Hata("reel için tek dosya gerekir")
@@ -74,12 +80,27 @@ def bekle(kimlik, token):
         time.sleep(BEKLEME_SN)
 
 
-def bugun_paylasildi(token, bugun):
+def dilim(simdi):
+    """simdi'ye göre bu çalışmanın saat dilimi: geçmiş en son SAATLER saati (cron gecikmesine dayanır); yoksa None."""
+    gecmis = [s for s in SAATLER if s <= simdi.hour]
+    return gecmis[-1] if gecmis else None
+
+
+def kuyruk_dosyasi(gun, saat):
+    dosya = KUYRUK / f"{gun.isoformat()}-{saat:02d}00.json"
+    eski = KUYRUK / f"{gun.isoformat()}.json"
+    if not dosya.exists() and saat == 21 and eski.exists():
+        return eski
+    return dosya
+
+
+def dilimde_paylasildi(token, baslangic):
+    """Son gönderi bu dilimin başlangıcından sonraysa True (yeniden çalıştırmada çift paylaşımı önler)."""
     veri = istek(f"{HESAP}/media?fields=timestamp&limit=1", token).get("data", [])
     if not veri:
         return False
-    son = datetime.strptime(veri[0]["timestamp"], "%Y-%m-%dT%H:%M:%S%z").astimezone(ISTANBUL)
-    return son.date() == bugun
+    son = datetime.strptime(veri[0]["timestamp"], "%Y-%m-%dT%H:%M:%S%z")
+    return son >= baslangic
 
 
 def calistir(plan, token):
@@ -97,6 +118,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kuru", action="store_true", help="ağ isteği yapmadan planı yazdır")
     ap.add_argument("--tarih", help="YYYY-MM-DD (test)")
+    ap.add_argument("--saat", type=int, help="0-23, TR saati (test)")
     ap.add_argument("--kontrol", action="store_true", help="yalnız token'ı dener, paylaşmaz")
     a = ap.parse_args()
     if not HESAP:
@@ -107,10 +129,18 @@ def main():
         izin = istek("me/permissions", os.environ.get("IG_TOKEN", "")).get("data", [])
         print("izinler:", ", ".join(i["permission"] for i in izin if i.get("status") == "granted"))
         return 0
-    bugun = datetime.strptime(a.tarih, "%Y-%m-%d").date() if a.tarih else datetime.now(ISTANBUL).date()
-    dosya = KUYRUK / f"{bugun.isoformat()}.json"
+    simdi = datetime.now(ISTANBUL)
+    if a.tarih:
+        simdi = datetime.strptime(a.tarih, "%Y-%m-%d").replace(hour=simdi.hour, tzinfo=ISTANBUL)
+    if a.saat is not None:
+        simdi = simdi.replace(hour=a.saat)
+    saat = dilim(simdi)
+    if saat is None:  # gece yarısını geçen gecikme: önceki günün son dilimi
+        simdi, saat = simdi - timedelta(days=1), SAATLER[-1]
+    print(f"::notice::dilim {simdi.date()} {saat:02d}:00")
+    dosya = kuyruk_dosyasi(simdi.date(), saat)
     if not dosya.exists():
-        print("::warning::kuyruk boş")
+        print(f"::warning::kuyruk boş ({dosya.name})")
         return 0
     kayit = json.loads(dosya.read_text(encoding="utf-8"))
     pages = os.environ.get("PAGES_URL")
@@ -125,8 +155,8 @@ def main():
     token = os.environ.get("IG_TOKEN")
     if not token:
         raise Hata("IG_TOKEN tanımlı değil")
-    if bugun_paylasildi(token, bugun):
-        print("bugün zaten paylaşılmış")
+    if dilimde_paylasildi(token, simdi.replace(hour=saat, minute=0, second=0, microsecond=0)):
+        print(f"{saat:02d}:00 dilimi zaten paylaşılmış")
         return 0
     print("yayınlandı:", calistir(plan, token))
     return 0
