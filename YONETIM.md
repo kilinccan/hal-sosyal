@@ -15,16 +15,26 @@ Hesap `@hal.uygulama`. HÂL: hâline uygun ayet/dua, reklamsız, veri toplamaz. 
    - **Altyazı:** Türkçe yazım/noktalama, sakin ve yargısız ton, 1. satır kanca + 2. satır takip çağrısı, ≤5 hashtag, vaat/tarih kuralı, Değişmez kurallar.
    - **Akış:** her gün 5 dilim dolu; gün içinde biçim ve hâl çeşitli (aynı ayet/video aynı gün iki kez yok, 5 gün kuralı); sabah-akşam tonu dilime uygun.
    - Sonuç: dosya başına `ONAY` ya da `RET: neden · düzeltme`. Denetçiye gerekçe, istisna ya da "bunu RET sayma" yazılmaz; kuralı yalnız bu dosya belirler. RET varsa düzelt ve yeni bir denetçiye yeniden denetlet (en fazla 2 tur). Hâlâ RET olan değişikliği geri al (`git checkout -- dosya`); hiçbir RET'li dosya `yayin`a gitmez, NOTLAR'a "OWNER: denetim reddi: …" yaz.
-6. Yalnız denetimden geçenleri doğrudan `yayin` dalına commit + push et (yalnız `kuyruk/`, `medya/`, `NOTLAR.md`). Push reddedilirse dal aç, `NOTLAR.md`'ye yaz.
+6. Yalnız denetimden geçenleri doğrudan `yayin` dalına commit + push et (yalnız `kuyruk/`, `medya/`, `reklam/plan.json`, `NOTLAR.md`). Push reddedilirse dal aç, `NOTLAR.md`'ye yaz.
 7. `NOTLAR.md`'nin başına 3 satır ekle: tarih · ne gördün (sayılarla) · ne değiştirdin + denetim sonucu (ONAY/RET sayısı). Dosya 60 satırı geçerse en eskiyi sil.
 
 ## Kuyruk biçimi
-`kuyruk/YYYY-MM-DD-HHMM.json`: `{"tur": "reel|carousel|gorsel|hikaye", "dosyalar": ["medya/..."], "aciklama": "..."}` (hikayede aciklama yok). Görsel 4:5 1080×1350, hikâye/Reels 9:16. Doğrulama: `IG_USER_ID=1 PAGES_URL=https://x/ python -X utf8 paylas.py --kuru --tarih YYYY-MM-DD --saat HH`.
+`kuyruk/YYYY-MM-DD-HHMM.json`: `{"tur": "reel|carousel|gorsel|hikaye", "dosyalar": ["medya/..."], "aciklama": "..."}` (hikayede aciklama yok). Görsel 4:5 1080×1350, hikâye/Reels 9:16. Kod `main` dalında (bu dal yalnız veri). Doğrulama: `git fetch -q origin main && git show origin/main:paylas.py > /tmp/paylas.py && VERI_KOKU=. IG_USER_ID=1 PAGES_URL=https://x/ python -X utf8 -I /tmp/paylas.py --kuru --tarih YYYY-MM-DD --saat HH`.
+
+## Reklam (toplam 500 TL, deneysel; `reklam/plan.json`, şema `reklam/plan.sema.md`)
+Her gün 07:30'da GitHub Actions planı Meta'ya uygular; sonuç `reklam/son.txt` (harcama, erişim, profil ziyareti, takip). Amaç hype: takipçi ve profil ziyareti (darboğaz: izleyen profile geçmiyor). Kod sınırları: harcanan + planlı ×1.25 ≤ 500, günlük toplam ≤ 100, reklam ≤ 7 gün, min 40 TL/gün, yalnız TR. Sınırı aşan plan tümden reddedilir, o gün boşa gider: planlamadan önce hesapla.
+- **Gönderi seçimi:** yalnız organikte kanıtlanmış Reels: son 3 günde (kaydetme+paylaşım)/erişim oranı en yüksek; `medya_id` `rapor/son.txt`'teki sütundan. Altyazı reklamda değişmez, o yüzden Değişmez kurallara uyan gönderi.
+- **Faz 1, test (2 gün):** iki reklam paralel, 40 TL/gün, `hedef: profil_ziyareti`: A = en iyi Reels, B = ikinci en iyi (tercihen farklı hâl/kanca). Ölçüt: profil ziyareti başına maliyet, sonra yeni takipçi.
+- **Faz 2, ölçek:** kazanan 3-4 gün 50-60 TL/gün; kaybeden `durdur`. 1 gün sonunda profil ziyareti başına maliyet 5 TL'yi aşan ve takip getirmeyen reklam `durdur`.
+- **Yayın günü payı:** ~150 TL harcanmadan tutulur; App Store onay haberi (NOTLAR/rapor) gelince yayın günü en iyi Reels'e 3 gün.
+- Deneysel değişken her seferinde **tek**: gönderi, hedef (`etkilesim`/`erisim`) ya da yaş aralığı. Ne denediğini ve sonucunu NOTLAR'a sayıyla yaz.
+- `reklam/son.txt` hata ya da "anahtar yok" diyorsa yeni reklam ekleme; NOTLAR'a "OWNER: reklam kurulumu bekliyor" yaz.
+- Plan doğrulama: `git show origin/main:reklam.py > /tmp/reklam.py && VERI_KOKU=. python -X utf8 -I /tmp/reklam.py --kuru`. Plan değişikliği de denetçiye gider (bütçe hesabı, seçim gerekçesi, kurallar).
 
 ## Değişmez kurallar
 - Ayet/dua/meal **yalnız mevcut medyadan ve uygulamadaki doğrulanmış içerikten**; yapay zekâ ayet, meal, hadis, dua **üretmez**, kelime değiştirmez. Her ayet görselinde sure:ayet ve "Meal: Elmalılı Hamdi Yazır".
 - Ayet şakanın içinde olmaz; siyaset, mezhep, fetva, korkutma, başka uygulamayı kötüleme yok. Yüz, ünlü, film/meme hazır görseli yok. Tilavet sesi yok.
 - Uygulamada olmayan özellik vaat edilmez. Yayın tarihi kesinleşmeden "X gün kaldı" yok; altyazıda "yakında App Store'da". `rapor/son.txt` ya da NOTLAR'da onay haberi varsa "App Store'da".
 - Agresif = sık ve tutarlı paylaşım, güçlü kanca ("Yorgunsan kaydır", "Biri için kaydet"), en fazla 5 hashtag. Takip/beğeni/yorum otomasyonu, takip için takip, satın alınmış etkileşim **yok** (Meta kuralı, hesap kapanır).
-- `paylas.py`, workflow'lar, secret'lar değiştirilmez. Token istenmez, yazılmaz.
+- Kod (`main` dalı), workflow'lar, secret'lar değiştirilmez; bu dala kod/workflow eklenmez. Token istenmez, yazılmaz. `reklam/durum.json` ve `reklam/son.txt`'e dokunulmaz (Actions yazar).
 - Profil foto/bio/sabitleme API'de yok: öneriyi `NOTLAR.md`'de "OWNER:" satırıyla bırak.
