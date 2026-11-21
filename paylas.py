@@ -101,8 +101,14 @@ def main():
     if a.kontrol:
         t = os.environ.get("IG_TOKEN", "")
         print(f"token türü: {t.strip()[:4]}… uzunluk {len(t)}, boşluk/satır sonu: {t != t.strip()}")
-        hesap = istek("me?fields=username,account_type", t.strip())
-        print("bağlantı tamam:", hesap.get("username"), hesap.get("account_type"))
+        global API
+        API = "https://graph.facebook.com/v27.0"
+        for yol in ("me?fields=id,name", "me/accounts?fields=name,instagram_business_account{id,username}",
+                    "me/permissions"):
+            try:
+                print(yol, "->", json.dumps(istek(yol, t.strip()), ensure_ascii=False))
+            except Hata as ex:
+                print(yol, "-> HATA", ex)
         return 0
     bugun = datetime.strptime(a.tarih, "%Y-%m-%d").date() if a.tarih else datetime.now(ISTANBUL).date()
     dosya = KUYRUK / f"{bugun.isoformat()}.json"
