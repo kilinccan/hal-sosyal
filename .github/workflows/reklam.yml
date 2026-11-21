@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "30 4 * * *" # 07:30 TR; rapor.yml 06:37'de
   push:
-    branches: [main]
+    branches: [yayin]
     paths: ["reklam/plan.json"]
   workflow_dispatch:
 permissions:
