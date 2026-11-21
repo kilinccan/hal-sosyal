@@ -1,15 +1,17 @@
-"""Meta reklam planını uzlaştırır. Kullanım: META_ADS_TOKEN=... AD_ACCOUNT_ID=... FB_PAGE_ID=... IG_USER_ID=... python -X utf8 -I reklam.py [--kuru] [--rapor]
-Plan: reklam/plan.json (şema: reklam/plan.sema.md). Sert sınırlar aşağıdaki sabitlerdedir; aşan plan reddedilir, hiçbir şey oluşturulmaz."""
+"""Meta reklam planını uzlaştırır. Kullanım: META_ADS_TOKEN=... AD_ACCOUNT_ID=... FB_PAGE_ID=... IG_USER_ID=... [VERI_KOKU=veri] python -X utf8 -I reklam.py [--kuru] [--rapor]
+Kod main'de, veri (reklam/plan.json, reklam/durum.json) VERI_KOKU altında (yayin dalı). Sert sınırlar aşağıdaki sabitlerdedir; aşan plan reddedilir, hiçbir şey oluşturulmaz.
+Sıra: rapor (harcama Meta'dan) -> plan doğrulama -> uzlaştırma. --rapor yalnız raporu yapar."""
 import argparse, json, os, re, sys, urllib.error, urllib.parse, urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-KOK = Path(__file__).resolve().parent
-PLAN, DURUM = KOK / "reklam" / "plan.json", KOK / "reklam" / "durum.json"
+VERI = Path(os.environ.get("VERI_KOKU") or Path(__file__).resolve().parent)
+PLAN, DURUM = VERI / "reklam" / "plan.json", VERI / "reklam" / "durum.json"
 ISTANBUL = timezone(timedelta(hours=3))
 
 BUTCE_TL = float(os.environ.get("BUTCE_TL", "500"))
 GUNLUK_TOPLAM_TL, TEK_REKLAM_GUN = 100, 7
+ASIM_PAYI = 1.25  # Meta günlük bütçeyi %25'e kadar aşabilir
 
 # --- Meta API varsayımları: doğrulananlar ve [Varsayım] olanlar yalnız burada ---
 API = "https://graph.facebook.com/v27.0"  # doğrulandı (use-posts-as-ads örnekleri v27.0)
@@ -20,7 +22,7 @@ KURUS = 100  # [Varsayım] TRY için bütçe birimi kuruş (1/100)
 #  profil_ziyareti: OUTCOME_TRAFFIC + PROFILE_VISIT + INSTAGRAM_PROFILE (Ad Set referansında enum var, topluluk API'de çalıştığını bildiriyor; [Varsayım] bu hesapta denenmedi)
 #  etkilesim: OUTCOME_ENGAGEMENT + POST_ENGAGEMENT + ON_POST [Varsayım]
 #  erisim: OUTCOME_AWARENESS + REACH, destination_type yok [Varsayım]
-# Kampanya alanları is_adset_budget_sharing_enabled=false (bütçe adset'te), targeting_automation.advantage_audience=0 [Varsayım: v27'de zorunlu]
+# [Varsayım] is_adset_budget_sharing_enabled=false (bütçe adset'te), targeting_automation.advantage_audience=0, campaigns?filtering EQUAL operatörü
 HEDEFLER = {
     "profil_ziyareti": ("OUTCOME_TRAFFIC", "PROFILE_VISIT", "INSTAGRAM_PROFILE"),
     "etkilesim": ("OUTCOME_ENGAGEMENT", "POST_ENGAGEMENT", "ON_POST"),
@@ -31,8 +33,11 @@ EYLEMLER = {"profil": ("instagram_profile_visits", "profile_visit"), "takip": ("
             "kaydetme": ("onsite_conversion.post_save", "post_save")}
 
 AD_RE = re.compile(r"^[a-z0-9-]{3,40}$")
+SAYI_RE = re.compile(r"^\d+$")
+KUYRUK_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{4}$")
 DEGISEBILIR = ("gunluk_tl", "bitis", "durum")
 SABIT = ("medya_id", "kuyruk", "hedef", "baslangic")
+KIMLIKLER = ("medya", "kampanya", "adset", "creative", "reklam")
 
 
 class Hata(Exception):
@@ -42,8 +47,21 @@ class Hata(Exception):
 def temizle(metin):
     metin = re.sub(r"(access_token)=[^&\s\"']*", r"\1=***", str(metin))
     metin = re.sub(r"Bearer\s+\S+", "Bearer ***", metin)
-    token = os.environ.get("META_ADS_TOKEN")
-    return metin.replace(token, "***") if token else metin
+    metin = re.sub(r"act_\d+", "act_***", metin)
+    for ad in ("META_ADS_TOKEN", "AD_ACCOUNT_ID", "FB_PAGE_ID", "IG_USER_ID"):
+        deger = os.environ.get(ad)
+        if deger:
+            metin = metin.replace(deger, "***")
+    return metin
+
+
+def meta_hatasi(ex):
+    """Meta hata gövdesinden yalnız code ve message alınır."""
+    try:
+        e = json.loads(ex.read().decode("utf-8", "replace"))["error"]
+        return f"code={e.get('code')} {e.get('message')}"
+    except (ValueError, KeyError, TypeError):
+        return "gövde okunamadı"
 
 
 def istek(yol, token, veri=None):
@@ -54,9 +72,15 @@ def istek(yol, token, veri=None):
         with urllib.request.urlopen(r, timeout=60) as y:
             return json.load(y)
     except urllib.error.HTTPError as ex:
-        raise Hata(temizle(f"{ex.code} {yol}: {ex.read().decode('utf-8', 'replace')}")) from None
+        raise Hata(temizle(f"HTTP {ex.code} {yol.split('?')[0]}: {meta_hatasi(ex)}")) from None
     except urllib.error.URLError as ex:
-        raise Hata(temizle(f"{yol}: {ex.reason}")) from None
+        raise Hata(temizle(f"{yol.split('?')[0]}: {ex.reason}")) from None
+
+
+def kimlik(deger, alan):
+    if not isinstance(deger, str) or not SAYI_RE.match(deger):
+        raise Hata(f"{alan}: yalnız rakam olmalı")
+    return deger
 
 
 def gun(metin, alan):
@@ -66,19 +90,26 @@ def gun(metin, alan):
         raise Hata(f"{alan}: YYYY-MM-DD bekleniyor: {metin!r}") from None
 
 
-def dogrula(plan, durum, bugun):
-    """Sınırları denetler; ihlalde Hata. Bütçe: harcanan + kalan planlı <= BUTCE_TL; günlük toplam <= GUNLUK_TOPLAM_TL."""
-    ogeler = plan.get("reklamlar")
+def dogrula(plan, durum, bugun, harcanan):
+    """Sınırları denetler; ihlalde Hata. Bütçe: harcanan + kalan planlı x ASIM_PAYI <= BUTCE_TL; günlük toplam <= GUNLUK_TOPLAM_TL."""
+    ogeler = plan.get("reklamlar") if isinstance(plan, dict) else None
     if not isinstance(ogeler, list):
         raise Hata("plan.json: 'reklamlar' liste olmalı")
     adlar, gunluk, kalan = set(), {}, 0.0
     for o in ogeler:
+        if not isinstance(o, dict):
+            raise Hata("plan.json: her öğe nesne olmalı")
         ad = o.get("ad", "")
-        if not AD_RE.match(ad) or ad in adlar:
+        if not isinstance(ad, str) or not AD_RE.match(ad) or ad in adlar:
             raise Hata(f"ad geçersiz ya da tekrar: {ad!r}")
         adlar.add(ad)
-        if bool(o.get("medya_id")) == bool(o.get("kuyruk")):
+        medya, kuyruk = o.get("medya_id"), o.get("kuyruk")
+        if bool(medya) == bool(kuyruk):
             raise Hata(f"{ad}: medya_id ya da kuyruk (yalnız biri) gerekli")
+        if medya:
+            kimlik(medya, f"{ad}.medya_id")
+        elif not isinstance(kuyruk, str) or not KUYRUK_RE.match(kuyruk):
+            raise Hata(f"{ad}: kuyruk YYYY-MM-DD-HHMM olmalı")
         if o.get("hedef") not in HEDEFLER:
             raise Hata(f"{ad}: hedef {sorted(HEDEFLER)} içinden olmalı")
         if o.get("durum") not in ("aktif", "durdur"):
@@ -97,6 +128,8 @@ def dogrula(plan, durum, bugun):
             for k in SABIT:
                 if k in eski["plan"] and eski["plan"][k] != o.get(k):
                     raise Hata(f"{ad}: {k} sonradan değişmez; yeni ad aç")
+        elif o["durum"] == "aktif" and bit < bugun:
+            raise Hata(f"{ad}: bitis geçmişte")
         if o["durum"] == "aktif":
             g = bas
             while g <= bit:
@@ -107,9 +140,19 @@ def dogrula(plan, durum, bugun):
     for g, t in sorted(gunluk.items()):
         if t > GUNLUK_TOPLAM_TL:
             raise Hata(f"{g}: günlük toplam {t} TL > {GUNLUK_TOPLAM_TL} TL")
-    harcanan = sum(r.get("harcama_tl", 0) for r in durum["reklamlar"].values())
-    if harcanan + kalan > BUTCE_TL:
-        raise Hata(f"bütçe aşımı: harcanan {harcanan:.2f} + kalan planlı {kalan:.2f} > {BUTCE_TL:g} TL")
+    if harcanan + kalan * ASIM_PAYI > BUTCE_TL:
+        raise Hata(f"bütçe aşımı: harcanan {harcanan:.2f} + kalan planlı {kalan:.2f} x {ASIM_PAYI} > {BUTCE_TL:g} TL")
+
+
+def durum_dogrula(durum):
+    if not isinstance(durum, dict) or not isinstance(durum.get("reklamlar"), dict):
+        raise Hata("durum.json: 'reklamlar' nesne olmalı")
+    for ad, k in durum["reklamlar"].items():
+        if not isinstance(k, dict) or not isinstance(k.get("plan"), dict):
+            raise Hata(f"durum.json: {ad} bozuk")
+        for alan in KIMLIKLER:
+            if alan in k:
+                kimlik(k[alan], f"durum.json {ad}.{alan}")
 
 
 def zaman(g, ertesi_gun=False):
@@ -121,55 +164,91 @@ def hedefleme(o):
             "publisher_platforms": ["instagram"], "targeting_automation": {"advantage_audience": 0}}
 
 
-def medya_coz(o, token, ig):
+def medya_coz(o, ctx):
     if o.get("medya_id"):
         return o["medya_id"]
-    if token is None:
+    if ctx["token"] is None:
         return "<kuyruk gönderisinin id'si>"
     saat = datetime.strptime(o["kuyruk"], "%Y-%m-%d-%H%M").replace(tzinfo=ISTANBUL)
-    for m in sorted(istek(f"{ig}/media?fields=id,timestamp&limit=25", token).get("data", []), key=lambda m: m["timestamp"]):
+    for m in sorted(ctx["al"](f"{ctx['ig']}/media?fields=id,timestamp&limit=25").get("data", []), key=lambda m: m["timestamp"]):
         t = datetime.strptime(m["timestamp"], "%Y-%m-%dT%H:%M:%S%z")
         if saat <= t <= saat + timedelta(hours=3):
             return m["id"]
     raise Hata(f"{o['ad']}: kuyruk {o['kuyruk']} için yayınlanmış gönderi bulunamadı")
 
 
+def mevcut(ctx, yol, ad=None):
+    """Meta'da zaten var olan nesne (durum.json kaybına karşı idempotentlik)."""
+    for d in ctx["al"](yol).get("data", []):
+        if ad is None or d.get("name") == ad:
+            return d
+    return None
+
+
 def yeni_olustur(o, ctx, kayit, kaydet):
-    """Önce PAUSED; her adımın id'si hemen durum.json'a yazılır, yarım kalırsa sonraki koşu kaldığı yerden sürer."""
+    """Önce PAUSED; her adımın id'si hemen durum.json'a yazılır, yarım kalırsa sonraki koşu kaldığı yerden sürer.
+    Meta'da hal-<ad> kampanyası varsa yeniden üretmek yerine o kullanılır."""
     amac, hedef, hedef_tur = HEDEFLER[o["hedef"]]
-    post, hesap = ctx["post"], f"act_{ctx['hesap']}"
+    post, hesap, ad = ctx["post"], f"act_{ctx['hesap']}", f"hal-{o['ad']}"
+    olusturuldu = False
     if "medya" not in kayit:
-        kayit["medya"] = medya_coz(o, ctx["token"], ctx["ig"])
+        kayit["medya"] = medya_coz(o, ctx)
     if "kampanya" not in kayit:
-        kayit["kampanya"] = post(f"{hesap}/campaigns", {
-            "name": f"hal-{o['ad']}", "objective": amac, "status": "PAUSED", "special_ad_categories": "[]",
-            "buying_type": "AUCTION", "is_adset_budget_sharing_enabled": "false"})["id"]
+        filtre = urllib.parse.quote(json.dumps([{"field": "name", "operator": "EQUAL", "value": ad}]))
+        m = mevcut(ctx, f"{hesap}/campaigns?fields=id,name&filtering={filtre}", ad)
+        if m:
+            kayit["kampanya"] = m["id"]
+        else:
+            kayit["kampanya"] = post(f"{hesap}/campaigns", {
+                "name": ad, "objective": amac, "status": "PAUSED", "special_ad_categories": "[]",
+                "buying_type": "AUCTION", "is_adset_budget_sharing_enabled": "false"})["id"]
+            olusturuldu = True
         kaydet()
     if "adset" not in kayit:
-        baslangic = max(datetime.fromisoformat(zaman(gun(o["baslangic"], "baslangic"))), ctx["simdi"] + timedelta(minutes=5))
-        veri = {"name": f"hal-{o['ad']}", "campaign_id": kayit["kampanya"], "status": "PAUSED",
-                "daily_budget": int(round(o["gunluk_tl"] * KURUS)), "billing_event": "IMPRESSIONS",
-                "optimization_goal": hedef, "bid_strategy": "LOWEST_COST_WITHOUT_CAP",
-                "start_time": baslangic.isoformat(), "end_time": zaman(gun(o["bitis"], "bitis"), True),
-                "targeting": json.dumps(hedefleme(o)), "promoted_object": json.dumps({"page_id": ctx["sayfa"]})}
-        if hedef_tur:
-            veri["destination_type"] = hedef_tur
-        kayit["adset"] = post(f"{hesap}/adsets", veri)["id"]
+        m = None if olusturuldu else mevcut(ctx, f"{kayit['kampanya']}/adsets?fields=id")
+        if m:
+            kayit["adset"] = m["id"]
+        else:
+            baslangic = max(datetime.fromisoformat(zaman(gun(o["baslangic"], "baslangic"))), ctx["simdi"] + timedelta(minutes=5))
+            veri = {"name": ad, "campaign_id": kayit["kampanya"], "status": "PAUSED",
+                    "daily_budget": int(round(o["gunluk_tl"] * KURUS)), "billing_event": "IMPRESSIONS",
+                    "optimization_goal": hedef, "bid_strategy": "LOWEST_COST_WITHOUT_CAP",
+                    "start_time": baslangic.isoformat(), "end_time": zaman(gun(o["bitis"], "bitis"), True),
+                    "targeting": json.dumps(hedefleme(o)), "promoted_object": json.dumps({"page_id": ctx["sayfa"]})}
+            if hedef_tur:
+                veri["destination_type"] = hedef_tur
+            kayit["adset"] = post(f"{hesap}/adsets", veri)["id"]
+            olusturuldu = True
         kaydet()
+    if "reklam" not in kayit and not olusturuldu:
+        m = mevcut(ctx, f"{kayit['adset']}/ads?fields=id,creative%7Bid%7D")
+        if m:
+            kayit["reklam"] = m["id"]
+            kayit["creative"] = (m.get("creative") or {}).get("id") or kayit.get("creative")
+            kaydet()
+            return
     if "creative" not in kayit:
         kayit["creative"] = post(f"{hesap}/adcreatives", {
-            "name": f"hal-{o['ad']}", "object_id": ctx["sayfa"], "instagram_user_id": ctx["ig"],
+            "name": ad, "object_id": ctx["sayfa"], "instagram_user_id": ctx["ig"],
             "source_instagram_media_id": kayit["medya"]})["id"]
         kaydet()
     kayit["reklam"] = post(f"{hesap}/ads", {
-        "name": f"hal-{o['ad']}", "adset_id": kayit["adset"], "creative": json.dumps({"creative_id": kayit["creative"]}),
+        "name": ad, "adset_id": kayit["adset"], "creative": json.dumps({"creative_id": kayit["creative"]}),
         "status": "PAUSED"})["id"]
     kayit["durum_meta"] = "PAUSED"
     kaydet()
 
 
+def durum_ver(ctx, kayit, hedef):
+    for yol in (kayit["reklam"], kayit["adset"], kayit["kampanya"]):
+        ctx["post"](yol, {"status": hedef})
+    kayit["durum_meta"] = hedef
+
+
 def uzlastir(plan, durum, ctx, kaydet):
+    planda = set()
     for o in plan["reklamlar"]:
+        planda.add(o["ad"])
         kayit = durum["reklamlar"].setdefault(o["ad"], {"plan": {}})
         if "reklam" not in kayit:
             if o["durum"] == "durdur" and "kampanya" not in kayit:
@@ -185,11 +264,14 @@ def uzlastir(plan, durum, ctx, kaydet):
         hedef = "ACTIVE" if o["durum"] == "aktif" else "PAUSED"
         if kayit.get("durum_meta") != hedef:
             print(f"{o['ad']}: {hedef}")
-            for yol in (kayit["reklam"], kayit["adset"], kayit["kampanya"]):
-                ctx["post"](yol, {"status": hedef})
-            kayit["durum_meta"] = hedef
+            durum_ver(ctx, kayit, hedef)
         kayit["plan"] = {k: o.get(k) for k in (*SABIT, *DEGISEBILIR)}
         kaydet()
+    for ad, kayit in durum["reklamlar"].items():
+        if ad not in planda and "reklam" in kayit and kayit.get("durum_meta") != "PAUSED":
+            print(f"{ad}: planda yok, PAUSED")
+            durum_ver(ctx, kayit, "PAUSED")
+            kaydet()
 
 
 def eylem(satir, anahtarlar):
@@ -199,52 +281,83 @@ def eylem(satir, anahtarlar):
     return "-"
 
 
-def rapor(durum, token, kaydet):
+def hesap_harcamasi(ctx):
+    veri = ctx["al"](f"act_{ctx['hesap']}/insights?fields=spend&date_preset=maximum").get("data", [])
+    return float(veri[0].get("spend", 0)) if veri else 0.0
+
+
+def rapor(durum, ctx, kaydet):
+    """Hesabın toplam harcamasını (sınırın tek kaynağı) döndürür; reklam başına satırlar bilgi amaçlı."""
     print("ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme")
     for ad, k in durum["reklamlar"].items():
         if "reklam" not in k:
             continue
-        veri = istek(f"{k['reklam']}/insights?fields=spend,reach,actions&date_preset=maximum", token).get("data", [])
+        veri = ctx["al"](f"{k['reklam']}/insights?fields=spend,reach,actions&date_preset=maximum").get("data", [])
         s = veri[0] if veri else {}
         k["harcama_tl"] = float(s.get("spend", 0))
         print(" | ".join(str(x) for x in (ad, k.get("durum_meta"), f"{k['harcama_tl']:.2f}", s.get("reach", "-"),
               eylem(s, EYLEMLER["profil"]), eylem(s, EYLEMLER["takip"]), eylem(s, EYLEMLER["kaydetme"]))))
-    print(f"toplam harcama {sum(k.get('harcama_tl', 0) for k in durum['reklamlar'].values()):.2f} / {BUTCE_TL:g} TL")
+    toplam = hesap_harcamasi(ctx)
+    print(f"hesap toplam harcama {toplam:.2f} / {BUTCE_TL:g} TL")
     kaydet()
+    return toplam
+
+
+def baglam(kuru):
+    ctx = {"hesap": os.environ.get("AD_ACCOUNT_ID", "").removeprefix("act_"), "sayfa": os.environ.get("FB_PAGE_ID", ""),
+           "ig": os.environ.get("IG_USER_ID", ""), "token": os.environ.get("META_ADS_TOKEN"), "simdi": datetime.now(ISTANBUL)}
+    if kuru:
+        sayac = iter(range(1, 10**6))
+
+        def post(yol, veri):
+            print("POST", temizle(f"{API}/{yol}"), temizle(json.dumps(veri, ensure_ascii=False)))
+            return {"id": f"<yeni-id-{next(sayac)}>"}
+        ctx.update(token=None, post=post, al=lambda yol: {"data": []},
+                   hesap=ctx["hesap"] or "<AD_ACCOUNT_ID>", sayfa=ctx["sayfa"] or "<FB_PAGE_ID>", ig=ctx["ig"] or "<IG_USER_ID>")
+        return ctx
+    if not (ctx["token"] and ctx["hesap"] and ctx["sayfa"] and ctx["ig"]):
+        raise Hata("META_ADS_TOKEN, AD_ACCOUNT_ID, FB_PAGE_ID, IG_USER_ID tanımlı olmalı")
+    for alan in ("hesap", "sayfa", "ig"):
+        kimlik(ctx[alan], alan)
+
+    def al(yol):
+        r = istek(yol, ctx["token"])
+        for d in r.get("data", []):
+            if "id" in d:
+                kimlik(d["id"], "Meta yanıtı id")
+        return r
+
+    def post(yol, veri):
+        r = istek(yol, ctx["token"], veri)
+        if "id" in r:
+            kimlik(r["id"], "Meta yanıtı id")
+        return r
+    ctx.update(post=post, al=al)
+    return ctx
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kuru", action="store_true", help="ağsız; yapılacak çağrıları yazdır")
-    ap.add_argument("--rapor", action="store_true", help="reklam başına sonuçları yazdır, durum.json'a harcamayı yaz")
+    ap.add_argument("--rapor", action="store_true", help="yalnız rapor; durum.json'a harcamayı yazar")
     a = ap.parse_args()
     durum = json.loads(DURUM.read_text(encoding="utf-8")) if DURUM.exists() else {"reklamlar": {}}
-    token = os.environ.get("META_ADS_TOKEN")
-    ctx = {"hesap": os.environ.get("AD_ACCOUNT_ID", "").removeprefix("act_"), "sayfa": os.environ.get("FB_PAGE_ID", ""),
-           "ig": os.environ.get("IG_USER_ID", ""), "token": token, "simdi": datetime.now(ISTANBUL)}
-    if a.kuru:
-        sayac = iter(range(1, 10**6))
-
-        def post(yol, veri):
-            print("POST", f"{API}/{yol}", json.dumps(veri, ensure_ascii=False))
-            return {"id": f"<yeni-id-{next(sayac)}>"}
-        kaydet = lambda: None
-        ctx.update(token=None, hesap=ctx["hesap"] or "<AD_ACCOUNT_ID>", sayfa=ctx["sayfa"] or "<FB_PAGE_ID>",
-                   ig=ctx["ig"] or "<IG_USER_ID>")
-    else:
-        if not (token and ctx["hesap"] and ctx["sayfa"] and ctx["ig"]):
-            raise Hata("META_ADS_TOKEN, AD_ACCOUNT_ID, FB_PAGE_ID, IG_USER_ID tanımlı olmalı")
-        post = lambda yol, veri: istek(yol, token, veri)
-        kaydet = lambda: DURUM.write_text(json.dumps(durum, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    ctx["post"] = post
-    if a.rapor:
-        if a.kuru:
-            print("rapor ağ gerektirir; --kuru ile atlandı")
-            return 0
-        rapor(durum, token, kaydet)
-        return 0
+    durum_dogrula(durum)
     plan = json.loads(PLAN.read_text(encoding="utf-8"))
-    dogrula(plan, durum, ctx["simdi"].date())
+    if not a.rapor and not a.kuru and isinstance(plan, dict) and plan.get("reklamlar") == [] and not durum["reklamlar"] \
+            and not os.environ.get("META_ADS_TOKEN"):
+        print("plan boş, yapılacak iş yok")
+        return 0
+    ctx = baglam(a.kuru)
+    kaydet = (lambda: None) if a.kuru else (lambda: DURUM.write_text(json.dumps(durum, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"))
+    if a.kuru:
+        print("rapor ağ gerektirir; --kuru ile atlandı, harcanan 0 sayıldı")
+        harcanan = 0.0
+    else:
+        harcanan = rapor(durum, ctx, kaydet)
+    if a.rapor:
+        return 0
+    dogrula(plan, durum, ctx["simdi"].date(), harcanan)
     print(f"plan geçerli: {len(plan['reklamlar'])} reklam")
     uzlastir(plan, durum, ctx, kaydet)
     return 0
@@ -253,6 +366,6 @@ def main():
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Hata as ex:
-        print("::error::", temizle(ex))
+    except (Hata, ValueError, TypeError, KeyError) as ex:
+        print("::error::", temizle(ex if isinstance(ex, Hata) else f"{type(ex).__name__}: {ex}"))
         sys.exit(1)

@@ -7,7 +7,7 @@ from pathlib import Path
 API = "https://graph.facebook.com/v27.0"  # Unified login, system-user token: https://developers.facebook.com/documentation/instagram-platform/content-publishing
 HESAP = os.environ.get("IG_USER_ID", "")
 ISTANBUL = timezone(timedelta(hours=3))  # Türkiye'de yaz saati yok
-KUYRUK = Path(__file__).resolve().parent / "kuyruk"
+KUYRUK = Path(os.environ.get("VERI_KOKU") or Path(__file__).resolve().parent) / "kuyruk"  # veri yayin dalında, kod main'de
 BEKLEME_SN, ZAMAN_ASIMI_SN = 10, 300
 SAATLER = (9, 11, 13, 18, 21)  # paylas.yml cron'u ile aynı (TR saati)
 
