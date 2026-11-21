@@ -96,7 +96,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kuru", action="store_true", help="ağ isteği yapmadan planı yazdır")
     ap.add_argument("--tarih", help="YYYY-MM-DD (test)")
+    ap.add_argument("--kontrol", action="store_true", help="yalnız token'ı dener, paylaşmaz")
     a = ap.parse_args()
+    if a.kontrol:
+        hesap = istek("me?fields=username,account_type", os.environ.get("IG_TOKEN", ""))
+        print("bağlantı tamam:", hesap.get("username"), hesap.get("account_type"))
+        return 0
     bugun = datetime.strptime(a.tarih, "%Y-%m-%d").date() if a.tarih else datetime.now(ISTANBUL).date()
     dosya = KUYRUK / f"{bugun.isoformat()}.json"
     if not dosya.exists():
