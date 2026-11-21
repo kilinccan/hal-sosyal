@@ -104,6 +104,8 @@ def main():
     if a.kontrol:
         hesap = istek(f"{HESAP}?fields=username", os.environ.get("IG_TOKEN", ""))
         print("bağlantı tamam:", hesap.get("username"))
+        izin = istek("me/permissions", os.environ.get("IG_TOKEN", "")).get("data", [])
+        print("izinler:", ", ".join(i["permission"] for i in izin if i.get("status") == "granted"))
         return 0
     bugun = datetime.strptime(a.tarih, "%Y-%m-%d").date() if a.tarih else datetime.now(ISTANBUL).date()
     dosya = KUYRUK / f"{bugun.isoformat()}.json"
