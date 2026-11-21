@@ -42,11 +42,18 @@ def medya_url(pages, dosya):
 
 def planla(kayit, pages):
     """[(yol, veri)] istek planı; {c0}, {c1}... önceki container kimliklerinin yer tutucusu."""
-    eksik = {"tur", "dosyalar", "aciklama"} - kayit.keys()
+    gerekli = {"tur", "dosyalar"} if kayit.get("tur") == "hikaye" else {"tur", "dosyalar", "aciklama"}
+    eksik = gerekli - kayit.keys()
     if eksik:
         raise Hata(f"kuyruk kaydında eksik alan: {', '.join(sorted(eksik))}")
     plan = []
-    if kayit["tur"] == "carousel":
+    if kayit["tur"] == "hikaye":  # 9:16; açıklama alanı API'de yok
+        if len(kayit["dosyalar"]) != 1:
+            raise Hata("hikaye için tek dosya gerekir")
+        d = kayit["dosyalar"][0]
+        alan = "video_url" if d.lower().endswith(".mp4") else "image_url"
+        plan.append((f"{HESAP}/media", {"media_type": "STORIES", alan: medya_url(pages, d)}))
+    elif kayit["tur"] == "carousel":
         if not 2 <= len(kayit["dosyalar"]) <= 10:
             raise Hata("carousel 2-10 görsel olmalı")
         for d in kayit["dosyalar"]:
@@ -94,9 +101,9 @@ def kuyruk_dosyasi(gun, saat):
     return dosya
 
 
-def dilimde_paylasildi(token, baslangic):
-    """Son gönderi bu dilimin başlangıcından sonraysa True (yeniden çalıştırmada çift paylaşımı önler)."""
-    veri = istek(f"{HESAP}/media?fields=timestamp&limit=1", token).get("data", [])
+def dilimde_paylasildi(token, baslangic, kenar="media"):
+    """Son gönderi (ya da hikâye) bu dilimin başlangıcından sonraysa True (yeniden çalıştırmada çift paylaşımı önler)."""
+    veri = istek(f"{HESAP}/{kenar}?fields=timestamp&limit=1", token).get("data", [])
     if not veri:
         return False
     son = datetime.strptime(veri[0]["timestamp"], "%Y-%m-%dT%H:%M:%S%z")
@@ -114,15 +121,47 @@ def calistir(plan, token):
     return istek(f"{HESAP}/media_publish", token, {"creation_id": kimlikler[-1]})["id"]
 
 
+def rapor(token):
+    """Hesap ve son gönderilerin sayıları. Repo açık, log herkese açık: yorum metni ve kullanıcı adı yazdırılmaz."""
+    h = istek(f"{HESAP}?fields=username,biography,followers_count,follows_count,media_count", token)
+    print(f"hesap {h.get('username')}: {h.get('followers_count')} takipçi, {h.get('follows_count')} takip, "
+          f"{h.get('media_count')} gönderi")
+    print("bio:", json.dumps(h.get("biography", ""), ensure_ascii=False))
+    hafta = int((datetime.now(timezone.utc) - timedelta(days=7)).timestamp())
+    try:
+        hesap = istek(f"{HESAP}/insights?metric=reach,profile_views,accounts_engaged,follows_and_unfollows"
+                      f"&period=day&metric_type=total_value&since={hafta}", token).get("data", [])
+        print("son 7 gün:", ", ".join(f"{m['name']}={m.get('total_value', {}).get('value')}" for m in hesap))
+    except Hata as ex:
+        print("hesap insights alınamadı:", str(ex)[:120])
+    medya = istek(f"{HESAP}/media?fields=id,timestamp,media_product_type,media_type,like_count,comments_count,caption"
+                  "&limit=15", token).get("data", [])
+    print("tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | başlık")
+    for m in medya:
+        try:
+            ins = {i["name"]: i["values"][0]["value"] for i in istek(
+                f"{m['id']}/insights?metric=reach,views,saved,shares", token).get("data", [])}
+        except Hata as ex:
+            ins = {"reach": f"? ({str(ex)[:60]})"}
+        baslik = (m.get("caption") or "").split("\n")[0][:40]
+        print(" | ".join(str(x) for x in (m["timestamp"][:16], m.get("media_product_type"), m.get("like_count"),
+              m.get("comments_count"), ins.get("reach", "-"), ins.get("views", "-"), ins.get("saved", "-"),
+              ins.get("shares", "-"), baslik)))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kuru", action="store_true", help="ağ isteği yapmadan planı yazdır")
     ap.add_argument("--tarih", help="YYYY-MM-DD (test)")
     ap.add_argument("--saat", type=int, help="0-23, TR saati (test)")
     ap.add_argument("--kontrol", action="store_true", help="yalnız token'ı dener, paylaşmaz")
+    ap.add_argument("--rapor", action="store_true", help="hesap ve son gönderi sayılarını yazdırır, paylaşmaz")
     a = ap.parse_args()
     if not HESAP:
         raise Hata("IG_USER_ID tanımlı değil")
+    if a.rapor:
+        rapor(os.environ.get("IG_TOKEN", ""))
+        return 0
     if a.kontrol:
         hesap = istek(f"{HESAP}?fields=username", os.environ.get("IG_TOKEN", ""))
         print("bağlantı tamam:", hesap.get("username"))
@@ -155,7 +194,8 @@ def main():
     token = os.environ.get("IG_TOKEN")
     if not token:
         raise Hata("IG_TOKEN tanımlı değil")
-    if dilimde_paylasildi(token, simdi.replace(hour=saat, minute=0, second=0, microsecond=0)):
+    kenar = "stories" if kayit["tur"] == "hikaye" else "media"
+    if dilimde_paylasildi(token, simdi.replace(hour=saat, minute=0, second=0, microsecond=0), kenar):
         print(f"{saat:02d}:00 dilimi zaten paylaşılmış")
         return 0
     print("yayınlandı:", calistir(plan, token))
