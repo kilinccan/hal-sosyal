@@ -95,6 +95,16 @@ VIDEOS = {
     "8-yakin": [(hook("Kimse seni anlamıyor gibi mi?"), 2.3), *ayet_seq("50:16"), (CTA, 3.5)],
     "9-say": [(hook("Hiç saymaya çalıştın mı?"), 2.3), *ayet_seq("16:18"), (CTA, 3.5)],
     "10-dinlen": [(hook("Biraz dinlenmeye ihtiyacın mı var?"), 2.5), *ayet_seq("28:73"), (CTA, 3.5)],
+    "11-sabir": [(hook("Sabretmekte zorlanıyor musun?"), 2.3), *ayet_seq("2:153"), (CTA, 3.5)],
+    "12-mahzun-olma": [(hook("Gücün mü tükeniyor?"), 2.0), *ayet_seq("3:139"), (CTA, 3.5)],
+    "13-sikayet": [(hook("Derdini kimseye anlatamıyor musun?"), 2.5), *ayet_seq("12:86"), (CTA, 3.5)],
+    "14-umit": [(hook("Umudun azaldı mı?"), 2.0), *ayet_seq("42:28"), (CTA, 3.5)],
+    "15-yeter": [(hook("Her şeyi tek başına taşımaya mı çalışıyorsun?"), 2.8), *ayet_seq("33:3"), (CTA, 3.5)],
+    "16-sabri-cemil": [(hook("Biraz daha sabra mı ihtiyacın var?"), 2.5), *ayet_seq("70:5"), (CTA, 3.5)],
+    "17-sonu-hayirli": [(hook("Yarın için endişeli misin?"), 2.3), *ayet_seq("93:4"), (CTA, 3.5)],
+    "18-zayif": [(hook("Kendini zayıf mı hissediyorsun?"), 2.3), *ayet_seq("4:28"), (CTA, 3.5)],
+    "19-gogsume": [(hook("İçin sıkışıyorsa, bu duayı oku."), 2.5), *ayet_seq("20:25"), (CTA, 3.5)],
+    "20-kayip": [(hook("Bir kayıp mı yaşadın?"), 2.0), *ayet_seq("2:156"), (CTA, 3.5)],
 }
 
 
