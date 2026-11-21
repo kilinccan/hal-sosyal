@@ -1,0 +1,27 @@
+name: token-yenile
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ig-token
+  cancel-in-progress: false
+jobs:
+  yenile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Token yenile ve secret güncelle
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          GH_TOKEN: ${{ secrets.SECRETS_PAT }}
+        run: |
+          set -euo pipefail
+          yanit=$(curl -sS --fail-with-body -G "https://graph.instagram.com/refresh_access_token" \
+            --data-urlencode "grant_type=ig_refresh_token" \
+            -H "Authorization: Bearer $IG_TOKEN")
+          yeni=$(printf '%s' "$yanit" | python3 -c 'import json,sys; print(json.load(sys.stdin)["access_token"])')
+          echo "::add-mask::$yeni"
+          printf '%s' "$yeni" | gh secret set IG_TOKEN --repo "$GITHUB_REPOSITORY"
