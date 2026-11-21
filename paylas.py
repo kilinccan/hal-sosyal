@@ -136,7 +136,7 @@ def rapor(token):
         print("hesap insights alınamadı:", str(ex)[:120])
     medya = istek(f"{HESAP}/media?fields=id,timestamp,media_product_type,media_type,like_count,comments_count,caption"
                   "&limit=15", token).get("data", [])
-    print("tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | başlık")
+    print("tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | medya_id | başlık")
     for m in medya:
         try:
             ins = {i["name"]: i["values"][0]["value"] for i in istek(
@@ -146,7 +146,7 @@ def rapor(token):
         baslik = (m.get("caption") or "").split("\n")[0][:40]
         print(" | ".join(str(x) for x in (m["timestamp"][:16], m.get("media_product_type"), m.get("like_count"),
               m.get("comments_count"), ins.get("reach", "-"), ins.get("views", "-"), ins.get("saved", "-"),
-              ins.get("shares", "-"), baslik)))
+              ins.get("shares", "-"), m["id"], baslik)))
 
 
 def main():
