@@ -9,7 +9,7 @@ HESAP = os.environ.get("IG_USER_ID", "")
 ISTANBUL = timezone(timedelta(hours=3))  # Türkiye'de yaz saati yok
 KUYRUK = Path(__file__).resolve().parent / "kuyruk"
 BEKLEME_SN, ZAMAN_ASIMI_SN = 10, 300
-SAATLER = (9, 13, 21)  # paylas.yml cron'u ile aynı (TR saati)
+SAATLER = (9, 11, 13, 18, 21)  # paylas.yml cron'u ile aynı (TR saati)
 
 
 class Hata(Exception):
