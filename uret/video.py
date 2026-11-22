@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 APP = Path(os.environ.get("HAL_APP") or ROOT.parent / "ckappdesign" / "app")
 OUT = ROOT / "medya" / "video"
+SES = ROOT / "uret" / "ses" / "nps-dawnchorus.mp3"
 CHROME = os.environ.get("CHROME", "C:/Program Files/Google/Chrome/Application/chrome.exe")
 FFMPEG = shutil.which("ffmpeg")
 FFPROBE = shutil.which("ffprobe")
@@ -139,17 +140,17 @@ def build(name, seq, tmp):
 
 
 def sesli(src):
-    """Sessiz MP4'e kısık kahverengi gürültü (ambiyans) ekler -> video/sesli/."""
+    """Sessiz MP4'e şafak kuşları kaydını (NPS, kamu malı: uret/ses/KAYNAK.txt) ekler -> video/sesli/."""
     dur = float(subprocess.run(
         [FFPROBE, "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)],
         check=True, capture_output=True, text=True).stdout)
     dst = OUT / "sesli" / src.name
     dst.parent.mkdir(exist_ok=True)
-    af = f"lowpass=f=500,highpass=f=60,volume=0.35,afade=t=in:st=0:d=1.5,afade=t=out:st={dur - 1.5:.2f}:d=1.5"
-    subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src),
-                    "-f", "lavfi", "-t", f"{dur:.2f}", "-i", "anoisesrc=color=brown:amplitude=0.5:seed=7",
-                    "-map", "0:v", "-map", "1:a", "-af", af, "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
-                    "-movflags", "+faststart", str(dst)], check=True)
+    af = ("highpass=f=900,highpass=f=900,afftdn=nr=10,loudnorm=I=-27:TP=-6,"
+          f"afade=t=in:st=0:d=1.5,afade=t=out:st={dur - 2:.2f}:d=2")
+    subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src), "-stream_loop", "-1", "-i", str(SES),
+                    "-map", "0:v", "-map", "1:a", "-t", f"{dur:.2f}", "-c:v", "copy", "-af", af,
+                    "-ar", "48000", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(dst)], check=True)
     return dst
 
 
