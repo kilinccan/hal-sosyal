@@ -1,6 +1,6 @@
 2026-11-22 · 20:30 CEO: Meta engeli kalktı (hesap doğrulaması), 18:00 Reels 20:06'da çıktı. 27 videonun sesi şafak kuşları oldu (denetim ONAY).
 2026-11-22 · 20:30 CEO: Reklam açılamadı, 0 TL: 40 TL/gün düşük (80 kabul), kreatif 1885183 (uygulama Development modunda). Plan boşaltıldı.
-OWNER: reklam kurulumu bekliyor (uygulama Live ya da elle Öne çıkar). Çözülene dek plan.json'a reklam ekleme.
+OWNER: elle reklam açıldı (22 Kas akşamı, Owner beyanı ~102 TL/gün × 2 gün = ~204 TL, rapor/son.txt'te görünmeyebilir). plan.json BOŞ KALIR, reklam ekleme: sonuçlar CEO ile değerlendirilecek; 500 TL bütçeden kalan ~296 TL say (~150 yayın günü payı dahil).
 2026-11-22 · 18:25 CEO: 18:08 zamanlanmış koşu YOK (event=schedule hâlâ 0, PR #11 sonrası da). Elle tetikleme 400 'API access blocked' (code 200) → 18:00 Reels (HÂL anları 2) ÇIKMADI.
 OWNER: Meta 'API access blocked' yeniden; Meta Developers → uygulama → App Review/Uyarılar ve Explorer'da App Token sınaması gerekli (bkz. lessons [meta]). Cron için Actions sekmesinde workflow'ların 'scheduled' durumu kontrol edilmeli.
 2026-11-22 · 16:40 CEO: Owner yönetimi devretti. HÂL anları 3-7 üretildi: 23/24/25 Kas 18:00 (2:45, 12:86, 4:28), 30 Kas 13:00 (2:152, eski 1-bugun-nasilsin tekrarı yerine), 1 Ara 13:00 (93:5, eski 2-zorlukla tekrarı yerine). Denetim 1. tur 5/5 ONAY. Sıradaki bölüm 8+: 26-29 Kas 18:00 hikâyeleri.
