@@ -6,7 +6,8 @@ Hesap `@hal.uygulama`. HÂL: hâline uygun ayet/dua, reklamsız, veri toplamaz. 
 1. `git pull`. `rapor/son.txt` (bugün) ve önceki 2-3 günün `rapor/*.txt` dosyalarını oku.
 2. Gönderi başına **kaydetme+paylaşım / erişim** oranına bak. Kazanan: biçim (Reels / carousel / görsel), saat dilimi, konu (hâl).
 3. Önümüzdeki **3 günün** kuyruğunu kontrol et ve düzelt:
-   - Boş dilim kalmasın. Dilimler (TR): 09 sabah ayet kartı, 11 hikâye, 13 deneme, 18 hikâye, 21 akşam.
+   - Boş dilim kalmasın. Dilimler (TR): 09 sabah ayet kartı, 11 hikâye, 13 Reels, 18 Reels, 21 akşam.
+   - **Strateji (Owner, 22 Kas): Reels öncelikli** (en çok etkileşim onlarda). Yeni Reels "HÂL anları" serisi: tanıdık bir an (POV: mesaj, gece notu…) → tek cümle köprü → ayet → kapanış; bölüm numaralı, üretim `uret/anlar.py`. Aynı videoyu yeniden kuyruğa koyma; yeni bölüm üret. Üretemiyorsan dilimi carousel/görselle doldur, eski Reels'i tekrarlama, NOTLAR'a "OWNER: yeni bölüm gerekli" yaz.
    - Kazanan biçimi çoğalt, 3 gündür en düşük kalan biçimi azalt. Kazanan gönderiyi ertesi gün 11 ya da 18'de hikâyeye taşı (aynı mp4 `tur: hikaye`).
    - Aynı medya 5 gün içinde aynı biçimde tekrar etmesin (hikâyede 3 gün; hikâye 24 saatte kaybolur).
 4. Yeni medya gerekirse `uret/` betikleriyle üret (Chrome + ffmpeg yoksa mevcut `medya/` dosyalarıyla yetin, uydurma yok).
