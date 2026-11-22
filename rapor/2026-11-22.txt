@@ -1,0 +1,8 @@
+hesap hal.uygulama: 4 takipçi, 0 takip, 3 gönderi
+bio: "Bugün nasılsın? Hâline uygun bir ayet, her gün 🌱\nKaydet, sevdiğine gönder\nReklamsız · Veri toplamaz\nYakında App Store'da"
+son 7 gün: reach=2480, profile_views=10, accounts_engaged=64
+tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | medya_id | başlık
+2026-11-21T20:35 | REELS | 3 | 1 | 1078 | 1179 | 1 | 1 | 17928630675204317 | Bugün nasılsın? Hâlini seç, sana uygun a
+2026-11-21T19:54 | REELS | 37 | 0 | 1474 | 1692 | 21 | 5 | 18103156094562042 | Bugün nasılsın? Hâline göre bir ayet bır
+2026-11-21T19:50 | FEED | 1 | 0 | 3 | 6 | 0 | 0 | 17896426911685088 | Bugün nasılsın? Hâline göre bir ayet bır
+2026-11-22T08:43Z
