@@ -1,3 +1,4 @@
+2026-11-22 · 16:40 CEO: Owner yönetimi devretti. HÂL anları 3-7 üretildi: 23/24/25 Kas 18:00 (2:45, 12:86, 4:28), 30 Kas 13:00 (2:152, eski 1-bugun-nasilsin tekrarı yerine), 1 Ara 13:00 (93:5, eski 2-zorlukla tekrarı yerine). Denetim 1. tur 5/5 ONAY. Sıradaki bölüm 8+: 26-29 Kas 18:00 hikâyeleri.
 2026-11-22 · 16:05 CEO: Reels kapağı siyahtı (video karartmayla açılıyor, thumb_offset=0). main PR #13: kapak 2. saniye. Yeni videoda ilk 2 sn'de anlamlı kare olsun.
 OWNER: 15:00 'Görüldü' Reels'inin kapağını uygulamadan elle seç (Düzenle → Kapağı düzenle).
 2026-11-22 · 15:20 CEO: Owner kararı: Reels öncelikli, 18:00 dilimi Reels (YONETIM güncellendi). 18:00'e HÂL anları 2 · Gece listesi (Ahzâb 33:3) kondu, denetim 1. tur ONAY.
