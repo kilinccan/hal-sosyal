@@ -1,3 +1,5 @@
+2026-11-22 · 16:05 CEO: Reels kapağı siyahtı (video karartmayla açılıyor, thumb_offset=0). main PR #13: kapak 2. saniye. Yeni videoda ilk 2 sn'de anlamlı kare olsun.
+OWNER: 15:00 'Görüldü' Reels'inin kapağını uygulamadan elle seç (Düzenle → Kapağı düzenle).
 2026-11-22 · 15:20 CEO: Owner kararı: Reels öncelikli, 18:00 dilimi Reels (YONETIM güncellendi). 18:00'e HÂL anları 2 · Gece listesi (Ahzâb 33:3) kondu, denetim 1. tur ONAY.
 2026-11-22 · 14:57 CEO: Owner 13:00 tekrar reel'ini sildi. Yeni format pilotu "HÂL anları 1 · Görüldü" (POV mesaj → 2:186) 13:00 dilimine kondu ve elle paylaşıldı; 18:00 hikâyesi yerinde. Denetim: 1. tur RET (hareke, yanlış alarm: HarfBuzz referansıyla aynı), 2. tur RET (Arapça karede sure:ayet yok → eklendi), 3. tur ONAY.
 OWNER: Yeni seri formatı denemede; 30 Kas ve 1 Ara 13:00 tekrar videoları yeni bölümlerle değiştirilecek.
