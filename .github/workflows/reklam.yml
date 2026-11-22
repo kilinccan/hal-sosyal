@@ -1,7 +1,7 @@
 name: reklam
 on:
   schedule:
-    - cron: "30 4 * * *" # 07:30 TR; rapor.yml 06:37'de
+    - cron: "31 4 * * *" # 07:31 TR; rapor.yml 06:38'de
   workflow_dispatch:
 permissions:
   contents: write # yalnız son adımda durum.json'u itmek için; Meta anahtarı o adımda yok
