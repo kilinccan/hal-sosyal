@@ -1,5 +1,5 @@
 ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
 hesap toplam harcama 0.00 / 500 TL
-plan geçerli: 2 reklam
+plan geçerli: 1 reklam
 test-a-bugun-nasilsin: oluşturuluyor (PAUSED)
-::error:: HTTP 400 act_***/adsets: code=100 Invalid parameter | subcode=1885272 | Bütçe Çok Düşük | alan=daily_budget
+::error:: HTTP 400 act_***/adcreatives: code=100 Invalid parameter | subcode=1885183 | Reklam kreatif gönderisi, geliştirme modundaki bir uygulama tarafından oluşturuldu
