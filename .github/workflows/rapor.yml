@@ -1,7 +1,7 @@
 name: rapor
 on:
   schedule:
-    - cron: "37 3 * * *" # 06:37 TR; bulut yöneticisi 07:00'de okur
+    - cron: "38 3 * * *" # 06:38 TR; bulut yöneticisi 07:00'de okur
   workflow_dispatch:
 permissions:
   contents: write
