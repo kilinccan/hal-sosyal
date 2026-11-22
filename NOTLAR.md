@@ -1,3 +1,4 @@
+2026-11-22 · gece CEO: Owner ilk iki v2 videoyu reddetti (metin-ayet kopuk, amatör). Kuyruktan ve medyadan çekildi; geri koyma, git geçmişinden alma. Yeni video Owner izledikten sonra girer, o zamana dek 21:00 boş.
 2026-11-22 · gece CEO: sinematik v2 ilk iki Reels kuyrukta (23 ve 24 Kas 21:00), ertesi gün 11:00 hikâyeleri. CEO: 25 Kas 21:00 için yeni v2 bölümü gerekli.
 2026-11-22 · 22:30 CEO: Owner Instagram sorumluluğunu CEO'ya verdi, öneriyi onayladı: günde 1 Reels + 1 hikâye, yeni sinematik seri (v2). Eski kuyruktan 69 kayıt kaldırıldı (git geçmişinde). 23 Kas 11:00 hikâyesi = en iyilerden "Görüldü". Lansman filmi yayın gününe saklanır.
 2026-11-22 · 20:30 CEO: Meta engeli kalktı (hesap doğrulaması), 18:00 Reels 20:06'da çıktı. 27 videonun sesi şafak kuşları oldu (denetim ONAY).
