@@ -1,5 +1,3 @@
 {
-  "reklamlar": [
-    {"ad": "test-a-bugun-nasilsin", "medya_id": "18103156094562042", "hedef": "profil_ziyareti", "gunluk_tl": 80, "baslangic": "2026-11-22", "bitis": "2026-11-23", "durum": "aktif"}
-  ]
+  "reklamlar": []
 }
