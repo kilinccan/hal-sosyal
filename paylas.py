@@ -74,6 +74,15 @@ def planla(kayit, pages):
     return plan
 
 
+def dosyalari_dogrula(dosyalar):
+    """Yol veri kökünde var olmalı; ters eğik çizgi Windows'ta bulunur ama Pages'te 404 verir."""
+    kok = KUYRUK.parent.resolve()
+    bozuk = [d for d in dosyalar
+             if "\\" in d or not (kok / d).resolve().is_relative_to(kok) or not (kok / d).is_file()]
+    if bozuk:
+        raise Hata(f"medya yolu bozuk ya da dosya yok: {', '.join(bozuk)}")
+
+
 def bekle(kimlik, token):
     bitis = time.monotonic() + ZAMAN_ASIMI_SN
     while True:
@@ -186,6 +195,7 @@ def main():
     if not pages:
         raise Hata("PAGES_URL tanımlı değil")
     plan = planla(kayit, pages)
+    dosyalari_dogrula(kayit["dosyalar"])
     if a.kuru:
         for yol, veri in plan:
             print("POST", f"{API}/{yol}", json.dumps(veri, ensure_ascii=False))
