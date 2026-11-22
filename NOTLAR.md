@@ -1,4 +1,4 @@
-2026-11-22 · 14:5x CEO: Owner 13:00 reel'i tekrar buldu (yaratıcılık yok). Yeni format pilotu "HÂL anları 1 · Görüldü" (POV mesaj → 2:186) 18:00'e reel olarak kondu, 18:00 hikâyesi düştü. Denetim: 1. tur RET (hareke, yanlış alarm: HarfBuzz referansıyla aynı), 2. tur RET (Arapça karede sure:ayet yok → eklendi), 3. tur ONAY.
+2026-11-22 · 14:57 CEO: Owner 13:00 tekrar reel'ini sildi. Yeni format pilotu "HÂL anları 1 · Görüldü" (POV mesaj → 2:186) 13:00 dilimine kondu ve elle paylaşıldı; 18:00 hikâyesi yerinde. Denetim: 1. tur RET (hareke, yanlış alarm: HarfBuzz referansıyla aynı), 2. tur RET (Arapça karede sure:ayet yok → eklendi), 3. tur ONAY.
 OWNER: Yeni seri formatı denemede; 30 Kas ve 1 Ara 13:00 tekrar videoları yeni bölümlerle değiştirilecek.
 2026-11-22 · 11:44 CEO: yeni IG token çalışıyor, 11:00 hikâyesi yayınlandı, rapor güncel (medya_id var). Paylaşım engeli bitti; reklam YONETIM kurallarıyla planlanabilir.
 2026-11-22 · 11:15 CEO: IG API "API access blocked" (paylaşım + kontrol); 09/11 dilimleri çıkmadı, rapor bayat. Reklam token'ı çalışıyor (0/500 TL).
