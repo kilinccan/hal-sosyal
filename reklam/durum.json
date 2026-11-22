@@ -1,3 +1,9 @@
 {
-  "reklamlar": {}
+  "reklamlar": {
+    "test-a-bugun-nasilsin": {
+      "plan": {},
+      "medya": "18103156094562042",
+      "kampanya": "120250948112590176"
+    }
+  }
 }
