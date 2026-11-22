@@ -56,11 +56,24 @@ def temizle(metin):
 
 
 def meta_hatasi(ex):
-    """Meta hata gövdesinden yalnız code ve message alınır."""
+    """Meta hatasından code, alt kod, message, başlık ve suçlanan alan adları; tek satır, en çok 300 karakter.
+    Log herkese açık: error_user_msg yazılmaz; satır sonu workflow komutu enjekte edemesin diye silinir."""
     try:
-        e = json.loads(ex.read().decode("utf-8", "replace"))["error"]
-        return f"code={e.get('code')} {e.get('message')}"
-    except (ValueError, KeyError, TypeError):
+        e = json.loads(ex.read(65536).decode("utf-8", "replace"))["error"]
+        parcalar = [f"code={e.get('code')} {e.get('message')}"]
+        if e.get("error_subcode"):
+            parcalar.append(f"subcode={e['error_subcode']}")
+        if e.get("error_user_title"):
+            parcalar.append(str(e["error_user_title"]))
+        # error_data bazen nesne, bazen JSON metni: ikisinde de yalnız alan adları alınır
+        veri = e.get("error_data")
+        veri = veri if isinstance(veri, str) else json.dumps(veri)
+        blok = re.search(r'"blame_field_specs"\s*:\s*(\[\[.*?\]\])', veri)
+        alanlar = re.findall(r'"([a-z_]{3,40})"', blok.group(1)) if blok else []
+        if alanlar:
+            parcalar.append(f"alan={','.join(alanlar)}")
+        return " ".join(" | ".join(parcalar).split())[:300]
+    except (ValueError, KeyError, TypeError, AttributeError):
         return "gövde okunamadı"
 
 
