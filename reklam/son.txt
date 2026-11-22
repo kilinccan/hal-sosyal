@@ -1,3 +1,2 @@
 ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
-hesap toplam harcama 0.00 / 500 TL
-plan geçerli: 0 reklam
+::error:: HTTP 400 act_***/insights: code=200 API access blocked.
