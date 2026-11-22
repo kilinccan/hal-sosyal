@@ -56,10 +56,16 @@ def temizle(metin):
 
 
 def meta_hatasi(ex):
-    """Meta hata gövdesinden yalnız code ve message alınır."""
+    """Meta hata gövdesinden code, alt kod, message, başlık ve suçlanan alan adları alınır. Log herkese açık: error_user_msg yazılmaz."""
     try:
         e = json.loads(ex.read().decode("utf-8", "replace"))["error"]
-        return f"code={e.get('code')} {e.get('message')}"
+        veri = e.get("error_data")
+        if isinstance(veri, str):  # Meta bu alanı bazen JSON metni yollar
+            veri = json.loads(veri) if veri.startswith("{") else None
+        alanlar = re.findall(r"[a-z_]{3,40}", json.dumps(veri.get("blame_field_specs", ""))) if isinstance(veri, dict) else []
+        ek = [f"subcode={e['error_subcode']}" if e.get("error_subcode") else "",
+              str(e.get("error_user_title") or "")[:120], f"alan={','.join(alanlar)}" if alanlar else ""]
+        return " | ".join([f"code={e.get('code')} {e.get('message')}", *filter(None, ek)])
     except (ValueError, KeyError, TypeError):
         return "gövde okunamadı"
 
