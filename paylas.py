@@ -67,8 +67,9 @@ def planla(kayit, pages):
     elif kayit["tur"] == "reel":
         if len(kayit["dosyalar"]) != 1:
             raise Hata("reel için tek dosya gerekir")
+        # kapak: varsayılan ilk kare siyah (videolar karartmayla açılır); 2. saniyedeki kare kullanılır
         plan.append((f"{HESAP}/media", {"media_type": "REELS", "video_url": medya_url(pages, kayit["dosyalar"][0]),
-                                  "caption": kayit["aciklama"]}))
+                                  "caption": kayit["aciklama"], "thumb_offset": "2000"}))
     else:
         raise Hata(f"bilinmeyen tür: {kayit['tur']}")
     return plan
