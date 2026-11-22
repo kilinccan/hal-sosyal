@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<style>
+{{FONTS}}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#050B09}
+canvas,#cam,#grain,#vig{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#cam{transform-origin:540px 960px;perspective:2600px}
+#grain{mix-blend-mode:overlay;opacity:.16}
+#vig{background:radial-gradient(ellipse at 50% 48%,rgba(0,0,0,0) 42%,rgba(0,0,0,.62) 100%)}
+.t{position:absolute;left:540px;top:0;white-space:pre;text-align:center;font-family:HalSerif,serif;color:#F3EBD8;line-height:1.05;transform-origin:50% 50%}
+.hk{font-size:150px;font-weight:700}
+.cap{font-weight:800}
+.gd{color:#D8B878}
+.it{font-style:italic;font-weight:400}
+.ar{font-family:HalAmiri,serif;font-size:96px;line-height:2.05;direction:rtl;white-space:normal;text-wrap:balance;width:900px;color:#F6EFDC}
+.ml{font-size:64px;font-weight:450;line-height:1.38;white-space:normal;text-wrap:balance;width:900px;color:#EDE4CF}
+.rf{font-size:38px;letter-spacing:.03em;color:#D8B878}
+.shine{background:linear-gradient(100deg,#C4A262 0%,#D8B878 38%,#FFF3D4 50%,#D8B878 62%,#C4A262 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.phone{position:absolute;left:540px;top:960px;width:508px;height:1067px;margin:-533px 0 0 -254px;transform-style:preserve-3d}
+.pl{position:absolute;inset:0;border-radius:80px;box-sizing:border-box}
+.front{background:linear-gradient(145deg,#1d2523,#090d0c);border:2px solid rgba(220,235,225,.2)}
+.rim{position:absolute;inset:-2px;border-radius:82px;padding:4px;box-sizing:border-box;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.scr{position:absolute;left:14px;top:14px;width:480px;height:1039px;border-radius:66px;overflow:hidden;background:#000}
+.scr img,.scr div{position:absolute;left:0;top:0;width:480px;height:1039px}
+.isl{left:180px!important;top:20px!important;width:120px!important;height:34px!important;border-radius:17px;background:#000}
+#pg{position:absolute;left:340px;top:560px;width:400px;height:800px;border-radius:50%;filter:blur(90px)}
+</style></head><body>
+<canvas id="gl" width="1080" height="1920"></canvas>
+<canvas id="dust" width="1080" height="1920"></canvas>
+<canvas id="fx" width="1080" height="1920"></canvas>
+<div id="cam"></div>
+<div id="grain"></div>
+<div id="vig"></div>
+<script>window.VERI={{VERI}};</script>
+<script>{{JS}}</script>
+</body></html>
