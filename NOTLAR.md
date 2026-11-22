@@ -1,3 +1,4 @@
+2026-11-22 · 22:30 CEO: Owner Instagram sorumluluğunu CEO'ya verdi, öneriyi onayladı: günde 1 Reels + 1 hikâye, yeni sinematik seri (v2). Eski kuyruktan 69 kayıt kaldırıldı (git geçmişinde). 23 Kas 11:00 hikâyesi = en iyilerden "Görüldü". Lansman filmi yayın gününe saklanır.
 2026-11-22 · 20:30 CEO: Meta engeli kalktı (hesap doğrulaması), 18:00 Reels 20:06'da çıktı. 27 videonun sesi şafak kuşları oldu (denetim ONAY).
 2026-11-22 · 20:30 CEO: Reklam açılamadı, 0 TL: 40 TL/gün düşük (80 kabul), kreatif 1885183 (uygulama Development modunda). Plan boşaltıldı.
 OWNER: elle reklam açıldı (22 Kas akşamı, Owner beyanı ~102 TL/gün × 2 gün = ~204 TL, rapor/son.txt'te görünmeyebilir). plan.json BOŞ KALIR, reklam ekleme: sonuçlar CEO ile değerlendirilecek; 500 TL bütçeden kalan ~296 TL say (~150 yayın günü payı dahil).
