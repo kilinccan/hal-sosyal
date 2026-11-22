@@ -1,3 +1,6 @@
+2026-11-22 · Rapor bayat (21 Kas verisi; 4 takipçi, 7g erişim 2.207, 9 profil görüntüleme); 23-25 Kas kuyruğu 15/15 dolu, --kuru geçti. Reklam: 0 harcama, plan boş; rapor/son.txt'te medya_id sütunu yok, kanıtlı Reels seçilemedi → reklam eklenmedi (yeni rapor gelince Faz 1: 21 Kas 19:54 Reels, oran %1,4 vs 20:35 %0,3).
+2026-11-22 · 26 Kas 21:00 reel aynı gün 9-say tekrarı → 11-sabir (Bakara 153) yapıldı, altyazı uyarlandı.
+2026-11-22 · Denetim: 1. tur 15 ONAY (23-25 Kas), 26 Kas 21:00 değişikliği 1/1 ONAY; RET yok.
 2026-11-21 · Son rapor: 3 gönderi, kazanan Reels 1.339 erişim/21 kaydetme; 22-24 Kas kuyruğu 15/15 dolu, --kuru geçti.
 2026-11-21 · 22 ve 24 Kas 18:00 hikâyeleri yer değiştirdi (aynı gün aynı video tekrarı giderildi); medya havuzu 10 video, hikâye aralığı 24→27 Kas 3 gün.
 2026-11-21 · Denetim: 1. tur 13 ONAY/2 RET (aynı gün tekrar), düzeltme sonrası 2/2 ONAY. OWNER: yeni sesli video üretimi gerekli (havuz dar).
