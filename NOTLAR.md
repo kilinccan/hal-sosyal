@@ -1,3 +1,6 @@
+2026-11-22 · 11:15 CEO: IG API "API access blocked" (paylaşım + kontrol); 09/11 dilimleri çıkmadı, rapor bayat. Reklam token'ı çalışıyor (0/500 TL).
+2026-11-22 · CEO: 29 Kas, 1/3/5/6 Ara 21:00 medya yollarında "\" → "/" (404 veriyordu); kuyruğa yolu hep "/" ile yaz.
+OWNER: Meta paylaşım engeli açılmalı. Açılıp güncel rapor gelene kadar reklam planlama.
 2026-11-22 · Rapor bayat (21 Kas verisi; 4 takipçi, 7g erişim 2.207, 9 profil görüntüleme); 23-25 Kas kuyruğu 15/15 dolu, --kuru geçti. Reklam: 0 harcama, plan boş; rapor/son.txt'te medya_id sütunu yok, kanıtlı Reels seçilemedi → reklam eklenmedi (yeni rapor gelince Faz 1: 21 Kas 19:54 Reels, oran %1,4 vs 20:35 %0,3).
 2026-11-22 · 26 Kas 21:00 reel aynı gün 9-say tekrarı → 11-sabir (Bakara 153) yapıldı, altyazı uyarlandı.
 2026-11-22 · Denetim: 1. tur 15 ONAY (23-25 Kas), 26 Kas 21:00 değişikliği 1/1 ONAY; RET yok.
