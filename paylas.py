@@ -76,7 +76,9 @@ def planla(kayit, pages):
 
 def dosyalari_dogrula(dosyalar):
     """Yol veri kökünde var olmalı; ters eğik çizgi Windows'ta bulunur ama Pages'te 404 verir."""
-    bozuk = [d for d in dosyalar if "\\" in d or not (KUYRUK.parent / d).is_file()]
+    kok = KUYRUK.parent.resolve()
+    bozuk = [d for d in dosyalar
+             if "\\" in d or not (kok / d).resolve().is_relative_to(kok) or not (kok / d).is_file()]
     if bozuk:
         raise Hata(f"medya yolu bozuk ya da dosya yok: {', '.join(bozuk)}")
 
