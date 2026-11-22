@@ -1,4 +1,6 @@
 """Ağsız birim testleri: python -X utf8 -m unittest test_reklam"""
+import io
+import json
 import unittest
 from datetime import date, datetime, timezone
 
@@ -91,6 +93,27 @@ class UzlastirTest(unittest.TestCase):
         olusturma = [c for c in self.cagrilar if c[1].get("status") == "PAUSED" and "/" in c[0]]
         self.assertEqual(len(olusturma), 3)  # kampanya, adset, reklam
         self.assertEqual(self.cagrilar[-1][1], {"status": "ACTIVE"})
+
+
+class MetaHatasi(unittest.TestCase):
+    def coz(self, **ek):
+        govde = json.dumps({"error": {"code": 100, "message": "Invalid parameter", **ek}}).encode()
+        return reklam.meta_hatasi(io.BytesIO(govde))
+
+    def test_meta_hata_ayrintisi(self):
+        alan = {"blame_field_specs": [["daily_budget"]]}
+        for veri in (alan, json.dumps(alan)):
+            cikti = self.coz(error_subcode=7, error_data=veri, error_user_msg="GIZLI")
+            self.assertEqual(cikti, "code=100 Invalid parameter | subcode=7 | alan=daily_budget")
+        for veri in (None, "{bozuk", "metin", [1], {"blame_field_specs": [None]}):
+            self.assertEqual(self.coz(error_data=veri), "code=100 Invalid parameter")
+
+    def test_meta_hata_tek_satir(self):
+        cikti = self.coz(error_user_title="x\n::warning::y\r\n" + "z" * 500)
+        self.assertNotIn("\n", cikti)
+        self.assertNotIn("\r", cikti)
+        self.assertLessEqual(len(cikti), 300)
+        self.assertEqual(reklam.meta_hatasi(io.BytesIO(b'{"error": []}')), "gövde okunamadı")
 
 
 if __name__ == "__main__":
