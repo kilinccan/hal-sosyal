@@ -6,17 +6,17 @@ Hesap `@hal.uygulama`. HÂL: hâline uygun ayet/dua, reklamsız, veri toplamaz. 
 1. `git pull`. `rapor/son.txt` (bugün) ve önceki 2-3 günün `rapor/*.txt` dosyalarını oku.
 2. Gönderi başına **kaydetme+paylaşım / erişim** oranına bak. Kazanan: kanca, biçim (Reels / hikâye), konu (hâl).
 3. Önümüzdeki **3 günün** kuyruğunu kontrol et ve düzelt:
-   - **Tempo (Owner, 22 Kas gece): günde en çok 1 Reels (21:00) + 1 hikâye (11:00).** 09, 13 ve 18 bilerek boştur, doldurma. Carousel ve tek görsel yok.
-   - **Reels yalnız duygusal hikâye serisi (Owner, 22 Kas gece):** `medya/video/v3/`. Eski seriler (`medya/video/sesli/`, `medya/instagram/`) Reels ya da gönderi olarak kuyruğa girmez. Sıradaki v3 videosu yoksa 21:00 **boş kalır**; NOTLAR'a "CEO: yeni v3 bölümü gerekli" yaz. Aynı video Reels olarak tekrar etmez.
+   - **Tempo (Owner, 23 Kas gece): günde 2 Reels (13:00 ve 21:00) + 1 hikâye (11:00).** 09 ve 18 bilerek boştur. Haftada 1 İnce Belli carousel'i CEO kuyruğa koyabilir.
+   - **Reels yalnız v4 serileri (Owner, 23 Kas):** `medya/video/v4/`: HÂL anları, Gece 2, İnce Belli ve özel bölümler. Owner bunları haftalık paketle izler ve onaylar. Kuyruğa yalnız CEO koyar. **Routine video üretmez ve kuyruğa Reels eklemez**; boş Reels dilimi için NOTLAR'a "CEO: paket gerekli" yazar. v3 ve eski seriler kuyruğa girmez. Aynı video Reels olarak tekrar etmez.
    - Hikâye: bir önceki günün Reels'i ya da son 3 günün (kaydetme+paylaşım)/erişim oranı en yüksek Reels'i (eski seri olabilir). Uygun yoksa boş kalır. Aynı hikâye 3 gün içinde tekrar etmez.
    - Amaç gönderme: paylaşım/erişim birinci, kaydetme/erişim ikinci ölçüt.
-4. Medya üretme: v3 videolarını CEO üretir. Mevcut dosyalarla yetin, uydurma yok.
+4. Medya üretme: v4 videolarını CEO üretir. Mevcut dosyalarla yetin, uydurma yok.
 5. **Denetim (atlanmaz, değişiklik olmasa da):** önümüzdeki 3 günün kuyruğunu ve bu turda değişen/üretilen her dosyayı, işi yapmamış ayrı bir denetçi alt-agent'a (Agent aracı) incelet. Denetçiye yalnız bu dosyayı, `git diff` çıktısını ve dosya yollarını ver. Denetçi:
    - **İçerik:** her görseli açıp bakar (Read): ayet/meal mevcut onaylı medyadan mı, sure:ayet ve "Meal: Elmalılı Hamdi Yazır" var mı, yazı okunaklı ve taşmıyor mu, oran doğru mu. Video yalnız `medya/video/` altındaki mevcut dosyalardan mı.
    - **Anlam ve duygu (v3):** yazılar tek hikâye mi, ayet o hikâyenin doğrudan cevabı mı (bağı tek cümleyle yaz; yazamıyorsan RET), ayetin anlamı zorlanıyor mu, duygu sömürüsü ya da suçlama var mı.
    - **Doğallık (v3):** yapay zekâ yapımı gibi duruyor mu: kalıp/şiirimsi klişe, kimsenin konuşurken kurmayacağı cümle, yazıyla uyuşmayan stok görüntü, plastik ya da fazla efekt. Belirginse RET.
    - **Altyazı:** Türkçe yazım/noktalama, sakin ve yargısız ton, 1. satır kanca + 2. satır "birine gönder" çağrısı + 3. satır takip sebebi, ≤5 hashtag, vaat/tarih kuralı, Değişmez kurallar.
-   - **Akış:** günde en çok 1 Reels (21:00, yalnız v3) + 1 hikâye (11:00); boş dilim kusur değildir; tekrar kuralları.
+   - **Akış:** günde en çok 2 Reels (13:00 ve 21:00, yalnız v4) + 1 hikâye (11:00); boş dilim kusur değildir; tekrar kuralları. Fal/tefe'ül çerçevesi ("durdurduğun ayet senin", "şansına çıkan ayet") RET sebebidir.
    - Sonuç: dosya başına `ONAY` ya da `RET: neden · düzeltme`. Denetçiye gerekçe, istisna ya da "bunu RET sayma" yazılmaz; kuralı yalnız bu dosya belirler. RET varsa düzelt ve yeni bir denetçiye yeniden denetlet (en fazla 2 tur). Hâlâ RET olan değişikliği geri al (`git checkout -- dosya`); hiçbir RET'li dosya `yayin`a gitmez, NOTLAR'a "OWNER: denetim reddi: …" yaz.
 6. Yalnız denetimden geçenleri doğrudan `yayin` dalına commit + push et (yalnız `kuyruk/`, `medya/`, `reklam/plan.json`, `NOTLAR.md`). Push reddedilirse dal aç, `NOTLAR.md`'ye yaz.
 7. `NOTLAR.md`'nin başına 3 satır ekle: tarih · ne gördün (sayılarla) · ne değiştirdin + denetim sonucu (ONAY/RET sayısı). Dosya 60 satırı geçerse en eskiyi sil.
