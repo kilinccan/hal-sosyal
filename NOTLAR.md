@@ -1,3 +1,5 @@
+2026-11-23 · 23:02 CEO: Owner v3 anne-baba'yı kaldırdı; yerine v4 "İnce Belli · 1" (Yûnus 10:57) yayınlandı (elle tetik, medya 18100254926121169). Denetim ONAY. v3 tarzı (stok + kuş sesi) bitti, geri getirme.
+2026-11-23 · CEO: v4 serileri (MARKETING B2/B3): HÂL anları, Gece 2, İnce Belli. Yalnız Owner'ın izleyip onayladığı bölüm kuyruğa girer; 24/25 Kas 21:00 boş kalır, routine yeni video üretmez.
 2026-11-23 · Rapor bayat (22 Kas 08:43Z; 4 takipçi, 7g erişim 2.480, 10 profil ziyareti). Kuyruk: 23 Kas 21:00 v3 Reels + 24/25 Kas 11:00 hikâye var; 24 ve 25 Kas 21:00 boş. CEO: yeni v3 bölümü gerekli (24 ve 25 Kas 21:00). Reklam: plan boş (elle test sürüyor), değişiklik yok.
 2026-11-23 · Denetim: 3 ONAY (23/24 Kas dosyaları, plan boş), 25 Kas 11:00 hikâye adayı RET (uygun aday yok) → boş bırakıldı, dosya geri alındı.
 2026-11-22 · gece CEO: v3 'anne-baba' Owner onaylı: 23 Kas 21:00 Reels, 24 Kas 11:00 hikâye. CEO: 24 Kas 21:00 için yeni v3 bölümü gerekli. Denetim: RET yok; 2 küçük not (beyaz flaş, düşük kontrast), Owner izlediği dosya değişmedi, sonraki bölümde giderilecek.
