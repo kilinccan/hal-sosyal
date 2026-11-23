@@ -1,5 +1,6 @@
 """O saatin kuyruğunu Instagram'da yayınlar. Kullanım: IG_TOKEN=... PAGES_URL=https://kullanici.github.io/hal-sosyal/ python -X utf8 paylas.py [--kuru] [--tarih YYYY-MM-DD] [--saat HH]
-Kuyruk: kuyruk/YYYY-MM-DD-HHMM.json (HH ∈ SAATLER); eski YYYY-MM-DD.json 21:00 sayılır."""
+Kuyruk: kuyruk/YYYY-MM-DD-HHMM.json (HH ∈ SAATLER); eski YYYY-MM-DD.json 21:00 sayılır.
+Kayıt: {tur, dosyalar, aciklama}; reel için isteğe bağlı "trial": true (Trial Reel, MANUAL mezuniyet)."""
 import argparse, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -46,6 +47,11 @@ def planla(kayit, pages):
     eksik = gerekli - kayit.keys()
     if eksik:
         raise Hata(f"kuyruk kaydında eksik alan: {', '.join(sorted(eksik))}")
+    trial = kayit.get("trial")
+    if trial is not None and not isinstance(trial, bool):
+        raise Hata("trial true/false olmalı")
+    if trial and kayit["tur"] != "reel":
+        raise Hata("trial yalnız reel için")
     plan = []
     if kayit["tur"] == "hikaye":  # 9:16; açıklama alanı API'de yok
         if len(kayit["dosyalar"]) != 1:
@@ -68,8 +74,11 @@ def planla(kayit, pages):
         if len(kayit["dosyalar"]) != 1:
             raise Hata("reel için tek dosya gerekir")
         # kapak: varsayılan ilk kare siyah (videolar karartmayla açılır); 2. saniyedeki kare kullanılır
-        plan.append((f"{HESAP}/media", {"media_type": "REELS", "video_url": medya_url(pages, kayit["dosyalar"][0]),
-                                  "caption": kayit["aciklama"], "thumb_offset": "2000"}))
+        veri = {"media_type": "REELS", "video_url": medya_url(pages, kayit["dosyalar"][0]),
+                "caption": kayit["aciklama"], "thumb_offset": "2000"}
+        if trial:
+            veri["trial_params"] = json.dumps({"graduation_strategy": "MANUAL"}, separators=(",", ":"))
+        plan.append((f"{HESAP}/media", veri))
     else:
         raise Hata(f"bilinmeyen tür: {kayit['tur']}")
     return plan
