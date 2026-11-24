@@ -26,7 +26,7 @@ Hesap `@hal.uygulama`. HÂL: hâline uygun ayet/dua, reklamsız, veri toplamaz. 
 
 ## Reklam (toplam 500 TL, deneysel; `reklam/plan.json`, şema `reklam/plan.sema.md`)
 Her gün 07:30'da GitHub Actions planı Meta'ya uygular; sonuç `reklam/son.txt` (harcama, erişim, profil ziyareti, takip). Amaç hype: takipçi ve profil ziyareti (darboğaz: izleyen profile geçmiyor). Kod sınırları: harcanan + planlı ×1.25 ≤ 500, günlük toplam ≤ 100, reklam ≤ 7 gün, min 40 TL/gün, yalnız TR. Sınırı aşan plan tümden reddedilir, o gün boşa gider: planlamadan önce hesapla.
-- **Şu an otomatik reklam yok:** Owner'ın elle açtığı test (22-23 Kas, ~204 TL) sürüyor. `plan.json` boş kalır; CEO bu satırı kaldırana dek reklam ekleme.
+- **Şu an otomatik reklam yok (Owner kararı, 25 Kas):** elle test bitti (~204 TL: 4.693 erişim, 91 profil ziyareti, 3 takip ≈ 68 TL/takipçi). Kalan bütçe (×1.25 sınırıyla planlanabilir en çok ~236 TL) App Store yayın gününe saklanır; aşağıdaki yayın günü payı bunun içindedir. `plan.json` boş kalır; CEO bu satırı kaldırana dek reklam ekleme.
 - **Gönderi seçimi:** yalnız organikte kanıtlanmış Reels: son 3 günde (kaydetme+paylaşım)/erişim oranı en yüksek; `medya_id` `rapor/son.txt`'teki sütundan. Altyazı reklamda değişmez, o yüzden Değişmez kurallara uyan gönderi.
 - **Yayın günü payı:** ~150 TL harcanmadan tutulur; App Store onay haberi (NOTLAR/rapor) gelince yayın günü en iyi Reels'e 3 gün.
 - Deneysel değişken her seferinde **tek**: gönderi, hedef (`etkilesim`/`erisim`) ya da yaş aralığı. Ne denediğini ve sonucunu NOTLAR'a sayıyla yaz.
