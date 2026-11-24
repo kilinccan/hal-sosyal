@@ -16,7 +16,7 @@ def kayit(**kw):
 class PlanlaTest(unittest.TestCase):
     def test_trial_reel(self):
         veri = paylas.planla(kayit(trial=True), PAGES)[0][1]
-        self.assertEqual(json.loads(veri["trial_params"]), {"graduation_strategy": "MANUAL"})
+        self.assertEqual(json.loads(veri["trial_params"]), {"graduation_strategy": "SS_PERFORMANCE"})
         self.assertEqual(veri["thumb_offset"], "2000")
 
     def test_trialsiz_reel(self):
