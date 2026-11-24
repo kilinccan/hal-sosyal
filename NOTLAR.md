@@ -1,3 +1,6 @@
+2026-11-24 · Rapor bayat (22 Kas verisi; 7 takipçi, 7g erişim 5.177, 32 profil ziyareti; en iyi Reels 'Mesajın görüldü' 1.378 erişim/13 kaydet/8 paylaşım). 24-26 Kas kuyruğu dolu (11 hikâye, 13/21 Reels), --kuru geçti; reklam: harcama 0/500, plan boş (elle test sürüyor).
+2026-11-24 · Değişiklik yok. Denetim: 10 ONAY / 0 RET (video içi metni denetçi açamadı, önceki onaylara dayanır). Not: 25/26 Kas altyazılarındaki "İnce Belli her gün 13:00'te" 30 Kas ve 1 Ara 13:00 boş olduğundan CEO: sadeleştirilebilir.
+2026-11-24 · CEO: paket gerekli: 30 Kas ve 1 Ara 13:00 Reels (v4) ile 29 Kas sonrası boş dilimler.
 2026-11-23 · 23:02 CEO: Owner v3 anne-baba'yı kaldırdı; yerine v4 "İnce Belli · 1" (Yûnus 10:57) yayınlandı (elle tetik, medya 18100254926121169). Denetim ONAY. v3 tarzı (stok + kuş sesi) bitti, geri getirme.
 2026-11-23 · CEO: v4 serileri (MARKETING B2/B3): HÂL anları, Gece 2, İnce Belli. Yalnız Owner'ın izleyip onayladığı bölüm kuyruğa girer; 24/25 Kas 21:00 boş kalır, routine yeni video üretmez.
 2026-11-23 · Rapor bayat (22 Kas 08:43Z; 4 takipçi, 7g erişim 2.480, 10 profil ziyareti). Kuyruk: 23 Kas 21:00 v3 Reels + 24/25 Kas 11:00 hikâye var; 24 ve 25 Kas 21:00 boş. CEO: yeni v3 bölümü gerekli (24 ve 25 Kas 21:00). Reklam: plan boş (elle test sürüyor), değişiklik yok.
