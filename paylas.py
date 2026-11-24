@@ -140,6 +140,10 @@ def calistir(plan, token):
     return istek(f"{HESAP}/media_publish", token, {"creation_id": kimlikler[-1]})["id"]
 
 
+def izleme(ms):
+    return f"{ms / 1000:.1f}" if isinstance(ms, (int, float)) else "-"
+
+
 def rapor(token):
     """Hesap ve son gönderilerin sayıları. Repo açık, log herkese açık: yorum metni ve kullanıcı adı yazdırılmaz."""
     h = istek(f"{HESAP}?fields=username,biography,followers_count,follows_count,media_count", token)
@@ -155,17 +159,18 @@ def rapor(token):
         print("hesap insights alınamadı:", str(ex)[:120])
     medya = istek(f"{HESAP}/media?fields=id,timestamp,media_product_type,media_type,like_count,comments_count,caption"
                   "&limit=15", token).get("data", [])
-    print("tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | medya_id | başlık")
+    print("tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | ort. izleme sn | medya_id | başlık")
     for m in medya:
+        metrik = "reach,views,saved,shares" + (",ig_reels_avg_watch_time" if m.get("media_product_type") == "REELS" else "")
         try:
             ins = {i["name"]: i["values"][0]["value"] for i in istek(
-                f"{m['id']}/insights?metric=reach,views,saved,shares", token).get("data", [])}
+                f"{m['id']}/insights?metric={metrik}", token).get("data", [])}
         except Hata as ex:
             ins = {"reach": f"? ({str(ex)[:60]})"}
         baslik = (m.get("caption") or "").split("\n")[0][:40]
         print(" | ".join(str(x) for x in (m["timestamp"][:16], m.get("media_product_type"), m.get("like_count"),
               m.get("comments_count"), ins.get("reach", "-"), ins.get("views", "-"), ins.get("saved", "-"),
-              ins.get("shares", "-"), m["id"], baslik)))
+              ins.get("shares", "-"), izleme(ins.get("ig_reels_avg_watch_time")), m["id"], baslik)))
 
 
 def main():
