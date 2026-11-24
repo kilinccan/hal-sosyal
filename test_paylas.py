@@ -13,6 +13,13 @@ def kayit(**kw):
     return k
 
 
+class IzlemeTest(unittest.TestCase):
+    def test_izleme(self):
+        self.assertEqual(paylas.izleme(2500), "2.5")
+        self.assertEqual(paylas.izleme(0), "0.0")
+        self.assertEqual(paylas.izleme(None), "-")
+
+
 class PlanlaTest(unittest.TestCase):
     def test_trial_reel(self):
         veri = paylas.planla(kayit(trial=True), PAGES)[0][1]
