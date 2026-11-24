@@ -1,6 +1,6 @@
 """O saatin kuyruğunu Instagram'da yayınlar. Kullanım: IG_TOKEN=... PAGES_URL=https://kullanici.github.io/hal-sosyal/ python -X utf8 paylas.py [--kuru] [--tarih YYYY-MM-DD] [--saat HH]
 Kuyruk: kuyruk/YYYY-MM-DD-HHMM.json (HH ∈ SAATLER); eski YYYY-MM-DD.json 21:00 sayılır.
-Kayıt: {tur, dosyalar, aciklama}; reel için isteğe bağlı "trial": true (Trial Reel, MANUAL mezuniyet)."""
+Kayıt: {tur, dosyalar, aciklama}; reel için isteğe bağlı "trial": true (Trial Reel, iyi giderse kendiliğinden takipçilere açılır)."""
 import argparse, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -77,7 +77,8 @@ def planla(kayit, pages):
         veri = {"media_type": "REELS", "video_url": medya_url(pages, kayit["dosyalar"][0]),
                 "caption": kayit["aciklama"], "thumb_offset": "2000"}
         if trial:
-            veri["trial_params"] = json.dumps({"graduation_strategy": "MANUAL"}, separators=(",", ":"))
+            # iyi giderse takipçilere kendiliğinden açılır
+            veri["trial_params"] = json.dumps({"graduation_strategy": "SS_PERFORMANCE"}, separators=(",", ":"))
         plan.append((f"{HESAP}/media", veri))
     else:
         raise Hata(f"bilinmeyen tür: {kayit['tur']}")
