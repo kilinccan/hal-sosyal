@@ -1,11 +1,11 @@
-hesap hal.uygulama: 7 takipçi, 0 takip, 6 gönderi
+hesap hal.uygulama: 15 takipçi, 0 takip, 6 gönderi
 bio: "Bugün nasılsın? Hâline uygun bir ayet, her gün 🌱\nKaydet, sevdiğine gönder\nReklamsız · Veri toplamaz\nYakında App Store'da"
-son 7 gün: reach=5177, profile_views=32, accounts_engaged=175
+son 7 gün: reach=10265, profile_views=119, accounts_engaged=584
 tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | medya_id | başlık
-2026-11-22T18:15 | FEED | 3 | 0 | 5 | 9 | 0 | 0 | 18136182937759369 | Gece 2'de bu düşünceyle uyuyamayan tek s
-2026-11-22T17:06 | REELS | 9 | 0 | 708 | 774 | 1 | 2 | 18484715104112524 | Gece 1'de yarının listesi bitmiyorsa, bu
-2026-11-22T11:59 | REELS | 50 | 0 | 1378 | 1542 | 13 | 8 | 18129606712808148 | Mesajın görüldü, cevap gelmedi mi?
-2026-11-21T20:35 | REELS | 4 | 1 | 1100 | 1200 | 1 | 1 | 17928630675204317 | Bugün nasılsın? Hâlini seç, sana uygun a
-2026-11-21T19:54 | REELS | 38 | 0 | 1493 | 1712 | 21 | 5 | 18103156094562042 | Bugün nasılsın? Hâline göre bir ayet bır
-2026-11-21T19:50 | FEED | 3 | 0 | 5 | 9 | 0 | 0 | 17896426911685088 | Bugün nasılsın? Hâline göre bir ayet bır
-2026-11-23T13:34Z
+2026-11-24T10:26 | REELS | 5 | 0 | 283 | 309 | 0 | 0 | 17966084214215854 | Biri bitmeden öbürü geliyor. Bugün de mi
+2026-11-23T20:02 | REELS | 13 | 0 | 1358 | 1460 | 1 | 2 | 18100254926121169 | Pazartesi sabahı ruhum hâlâ pazar. Senin
+2026-11-22T17:06 | REELS | 9 | 0 | 716 | 783 | 1 | 2 | 18484715104112524 | Gece 1'de yarının listesi bitmiyorsa, bu
+2026-11-22T11:59 | REELS | 50 | 0 | 1384 | 1548 | 13 | 8 | 18129606712808148 | Mesajın görüldü, cevap gelmedi mi?
+2026-11-21T20:35 | REELS | 4 | 1 | 1104 | 1205 | 1 | 1 | 17928630675204317 | Bugün nasılsın? Hâlini seç, sana uygun a
+2026-11-21T19:54 | REELS | 39 | 0 | 1497 | 1720 | 22 | 6 | 18103156094562042 | Bugün nasılsın? Hâline göre bir ayet bır
+2026-11-24T14:12Z
