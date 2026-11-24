@@ -77,7 +77,8 @@ def planla(kayit, pages):
         veri = {"media_type": "REELS", "video_url": medya_url(pages, kayit["dosyalar"][0]),
                 "caption": kayit["aciklama"], "thumb_offset": "2000"}
         if trial:
-            veri["trial_params"] = json.dumps({"graduation_strategy": "SS_PERFORMANCE"}  # iyi giderse takipçilere kendiliğinden açılır, separators=(",", ":"))
+            # iyi giderse takipçilere kendiliğinden açılır
+            veri["trial_params"] = json.dumps({"graduation_strategy": "SS_PERFORMANCE"}, separators=(",", ":"))
         plan.append((f"{HESAP}/media", veri))
     else:
         raise Hata(f"bilinmeyen tür: {kayit['tur']}")
