@@ -1,3 +1,4 @@
+2026-11-25 · 00:20 CEO: Owner kararı (00:15): kazanan format HÂL anları (Görüldü 13 kaydet/8 paylaşım) 13:00'e; YONETIM'e istisna. 25 Kas 13:00 = HÂL anları 5 'Şarj %3' (Nisâ 4:28); İnce Belli 3 → 30 Kas 13:00. Denetim: içerik/meal/altyazı ONAY (4:28 items.json ile birebir), tek RET v4 kuralıydı → Owner kararıyla kaldırıldı; 30 Kas ONAY.
 2026-11-24 · Rapor bayat (22 Kas verisi; 7 takipçi, 7g erişim 5.177, 32 profil ziyareti; en iyi Reels 'Mesajın görüldü' 1.378 erişim/13 kaydet/8 paylaşım). 24-26 Kas kuyruğu dolu (11 hikâye, 13/21 Reels), --kuru geçti; reklam: harcama 0/500, plan boş (elle test sürüyor).
 2026-11-24 · Değişiklik yok. Denetim: 10 ONAY / 0 RET (video içi metni denetçi açamadı, önceki onaylara dayanır). Not: 25/26 Kas altyazılarındaki "İnce Belli her gün 13:00'te" 30 Kas ve 1 Ara 13:00 boş olduğundan CEO: sadeleştirilebilir.
 2026-11-24 · CEO: paket gerekli: 30 Kas ve 1 Ara 13:00 Reels (v4) ile 29 Kas sonrası boş dilimler.
