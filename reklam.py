@@ -184,7 +184,8 @@ def zaman(g, ertesi_gun=False):
 
 def hedefleme(o):
     return {"geo_locations": {"countries": ["TR"]}, "age_min": o.get("yas_min", 18), "age_max": o.get("yas_max", 65),
-            "publisher_platforms": ["instagram"], "targeting_automation": {"advantage_audience": 0}}
+            "publisher_platforms": ["instagram"], "device_platforms": ["mobile"], "user_os": ["iOS"],
+            "targeting_automation": {"advantage_audience": 0}}
 
 
 def medya_coz(o, ctx):
