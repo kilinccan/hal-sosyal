@@ -52,11 +52,11 @@ class DogrulaTest(unittest.TestCase):
                 kontrol([kotu])
 
     def test_app_store_link(self):
-        link = "https://apps.apple.com/tr/app/hal/id6700000000?ct=ig_ad"
+        link = "https://kilinccan.github.io/hal/?k=ig"
         kontrol([oge(hedef="app_store", link=link)])
         for o in (oge(hedef="app_store"), oge(link=link),
                   oge(hedef="app_store", link="https://ornek.com/id1"),
-                  oge(hedef="app_store", link="https://apps.apple.com/tr/app/hal/id1 x")):
+                  oge(hedef="app_store", link="https://apps.apple.com/tr/app/hal/id1")):
             with self.assertRaises(reklam.Hata):
                 kontrol([o])
 
