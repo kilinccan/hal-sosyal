@@ -10,7 +10,7 @@
       "bitis": "2026-11-27",
       "yas_min": 18,
       "yas_max": 40,
-      "durum": "aktif"
+      "durum": "durdur"
     },
     {
       "ad": "ios-mesaj-gorundu",
@@ -18,7 +18,7 @@
       "hedef": "app_store",
       "link": "https://kilinccan.github.io/hal/?k=ios1",
       "gunluk_tl": 80,
-      "baslangic": "2026-11-28",
+      "baslangic": "2026-11-27",
       "bitis": "2026-11-29",
       "yas_min": 18,
       "yas_max": 44,
