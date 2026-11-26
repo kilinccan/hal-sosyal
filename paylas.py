@@ -52,6 +52,13 @@ def planla(kayit, pages):
         raise Hata("trial true/false olmalı")
     if trial and kayit["tur"] != "reel":
         raise Hata("trial yalnız reel için")
+    alt = kayit.get("alt")  # isteğe bağlı, dosya başına; API yalnız görselde kabul eder (≤1000 karakter)
+    if alt is not None:
+        if kayit["tur"] not in ("carousel", "gorsel"):
+            raise Hata("alt yalnız carousel/gorsel için")
+        if (not isinstance(alt, list) or len(alt) != len(kayit["dosyalar"])
+                or not all(isinstance(a, str) and 0 < len(a) <= 1000 for a in alt)):
+            raise Hata("alt, dosya başına 1-1000 karakterlik metin listesi olmalı")
     plan = []
     if kayit["tur"] == "hikaye":  # 9:16; açıklama alanı API'de yok
         if len(kayit["dosyalar"]) != 1:
@@ -62,14 +69,20 @@ def planla(kayit, pages):
     elif kayit["tur"] == "carousel":
         if not 2 <= len(kayit["dosyalar"]) <= 10:
             raise Hata("carousel 2-10 görsel olmalı")
-        for d in kayit["dosyalar"]:
-            plan.append((f"{HESAP}/media", {"image_url": medya_url(pages, d), "is_carousel_item": "true"}))
+        for i, d in enumerate(kayit["dosyalar"]):
+            veri = {"image_url": medya_url(pages, d), "is_carousel_item": "true"}
+            if alt:
+                veri["alt_text"] = alt[i]
+            plan.append((f"{HESAP}/media", veri))
         kimlikler = ",".join(f"{{c{i}}}" for i in range(len(kayit["dosyalar"])))
         plan.append((f"{HESAP}/media", {"media_type": "CAROUSEL", "children": kimlikler, "caption": kayit["aciklama"]}))
     elif kayit["tur"] == "gorsel":
         if len(kayit["dosyalar"]) != 1:
             raise Hata("görsel için tek dosya gerekir")
-        plan.append((f"{HESAP}/media", {"image_url": medya_url(pages, kayit["dosyalar"][0]), "caption": kayit["aciklama"]}))
+        veri = {"image_url": medya_url(pages, kayit["dosyalar"][0]), "caption": kayit["aciklama"]}
+        if alt:
+            veri["alt_text"] = alt[0]
+        plan.append((f"{HESAP}/media", veri))
     elif kayit["tur"] == "reel":
         if len(kayit["dosyalar"]) != 1:
             raise Hata("reel için tek dosya gerekir")
