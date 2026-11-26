@@ -22,12 +22,16 @@ KURUS = 100  # [Varsayım] TRY için bütçe birimi kuruş (1/100)
 #  profil_ziyareti: OUTCOME_TRAFFIC + PROFILE_VISIT + INSTAGRAM_PROFILE (Ad Set referansında enum var, topluluk API'de çalıştığını bildiriyor; [Varsayım] bu hesapta denenmedi)
 #  etkilesim: OUTCOME_ENGAGEMENT + POST_ENGAGEMENT + ON_POST [Varsayım]
 #  erisim: OUTCOME_AWARENESS + REACH, destination_type yok [Varsayım]
+#  app_store: OUTCOME_TRAFFIC + LINK_CLICKS + WEBSITE; creative call_to_action DOWNLOAD + link (2061015 "link zorunlu" hatası
+#   profil_ziyareti'nde görüldü; IG gönderisi + call_to_action [Varsayım])
 # [Varsayım] is_adset_budget_sharing_enabled=false (bütçe adset'te), targeting_automation.advantage_audience=0, campaigns?filtering EQUAL operatörü
 HEDEFLER = {
     "profil_ziyareti": ("OUTCOME_TRAFFIC", "PROFILE_VISIT", "INSTAGRAM_PROFILE"),
     "etkilesim": ("OUTCOME_ENGAGEMENT", "POST_ENGAGEMENT", "ON_POST"),
     "erisim": ("OUTCOME_AWARENESS", "REACH", None),
+    "app_store": ("OUTCOME_TRAFFIC", "LINK_CLICKS", "WEBSITE"),
 }
+APP_STORE_RE = re.compile(r"^https://apps\.apple\.com/[a-z]{2}/app/[^\s?#]*id\d+(\?[A-Za-z0-9=&_.-]*)?$")
 # Insights action_type adları [Varsayım]; bulunamazsa rapor "-" yazar
 EYLEMLER = {"profil": ("instagram_profile_visits", "profile_visit"), "takip": ("follow", "onsite_conversion.ig_follow"),
             "kaydetme": ("onsite_conversion.post_save", "post_save")}
@@ -36,7 +40,7 @@ AD_RE = re.compile(r"^[a-z0-9-]{3,40}$")
 SAYI_RE = re.compile(r"^\d+$")
 KUYRUK_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{4}$")
 DEGISEBILIR = ("gunluk_tl", "bitis", "durum")
-SABIT = ("medya_id", "kuyruk", "hedef", "baslangic")
+SABIT = ("medya_id", "kuyruk", "hedef", "baslangic", "link")
 KIMLIKLER = ("medya", "kampanya", "adset", "creative", "reklam")
 
 
@@ -125,6 +129,11 @@ def dogrula(plan, durum, bugun, harcanan):
             raise Hata(f"{ad}: kuyruk YYYY-MM-DD-HHMM olmalı")
         if o.get("hedef") not in HEDEFLER:
             raise Hata(f"{ad}: hedef {sorted(HEDEFLER)} içinden olmalı")
+        link = o.get("link")
+        if (o["hedef"] == "app_store") != (link is not None):
+            raise Hata(f"{ad}: link yalnız ve zorunlu olarak app_store hedefinde")
+        if link is not None and (not isinstance(link, str) or not APP_STORE_RE.match(link)):
+            raise Hata(f"{ad}: link https://apps.apple.com/<ülke>/app/...id<sayı> olmalı")
         if o.get("durum") not in ("aktif", "durdur"):
             raise Hata(f"{ad}: durum aktif|durdur olmalı")
         tl = o.get("gunluk_tl")
@@ -241,9 +250,11 @@ def yeni_olustur(o, ctx, kayit, kaydet):
             kaydet()
             return
     if "creative" not in kayit:
-        kayit["creative"] = post(f"{hesap}/adcreatives", {
-            "name": ad, "object_id": ctx["sayfa"], "instagram_user_id": ctx["ig"],
-            "source_instagram_media_id": kayit["medya"]})["id"]
+        veri = {"name": ad, "object_id": ctx["sayfa"], "instagram_user_id": ctx["ig"],
+                "source_instagram_media_id": kayit["medya"]}
+        if o.get("link"):
+            veri["call_to_action"] = json.dumps({"type": "DOWNLOAD", "value": {"link": o["link"]}})
+        kayit["creative"] = post(f"{hesap}/adcreatives", veri)["id"]
         kaydet()
     kayit["reklam"] = post(f"{hesap}/ads", {
         "name": ad, "adset_id": kayit["adset"], "creative": json.dumps({"creative_id": kayit["creative"]}),

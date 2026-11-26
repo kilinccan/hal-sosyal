@@ -51,6 +51,15 @@ class DogrulaTest(unittest.TestCase):
             with self.subTest(kotu=kotu), self.assertRaises(reklam.Hata):
                 kontrol([kotu])
 
+    def test_app_store_link(self):
+        link = "https://apps.apple.com/tr/app/hal/id6700000000?ct=ig_ad"
+        kontrol([oge(hedef="app_store", link=link)])
+        for o in (oge(hedef="app_store"), oge(link=link),
+                  oge(hedef="app_store", link="https://ornek.com/id1"),
+                  oge(hedef="app_store", link="https://apps.apple.com/tr/app/hal/id1 x")):
+            with self.assertRaises(reklam.Hata):
+                kontrol([o])
+
     def test_degismez_alan(self):
         durum = {"reklamlar": {"tanitim-1": {"plan": {"medya_id": "123", "hedef": "erisim"}}}}
         with self.assertRaisesRegex(reklam.Hata, "hedef"):
