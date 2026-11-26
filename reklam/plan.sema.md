@@ -8,7 +8,7 @@
 | `medya_id` | biri zorunlu | yayınlanmış IG gönderi id'si |
 | `kuyruk` | biri zorunlu | `YYYY-MM-DD-HHMM` (kuyruk dosyası adı; gönderi o saatten sonraki 3 saatte yayınlanmış olmalı) |
 | `hedef` | evet | `profil_ziyareti`, `etkilesim`, `erisim` veya `app_store` |
-| `link` | yalnız `app_store`'da, zorunlu | `https://apps.apple.com/<ülke>/app/...id<sayı>`; sonradan değişmez |
+| `link` | yalnız `app_store`'da, zorunlu | `https://kilinccan.github.io/hal/` (+ basit sorgu); sonradan değişmez |
 | `gunluk_tl` | evet | sayı, `MIN_GUNLUK_TL` <= x <= 100 |
 | `baslangic`, `bitis` | evet | `YYYY-MM-DD` (TR günü, ikisi dahil); en çok 7 gün |
 | `durum` | evet | `aktif` veya `durdur` |
