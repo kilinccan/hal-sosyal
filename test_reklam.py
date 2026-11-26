@@ -65,6 +65,24 @@ class DogrulaTest(unittest.TestCase):
         with self.assertRaisesRegex(reklam.Hata, "hedef"):
             kontrol([oge()], durum)
 
+    def test_ilgi_dogrulama(self):
+        kontrol([oge(ilgi=[{"id": "6003", "name": "Quran"}])])
+        for kotu in ([], "6003", [{"id": "abc", "name": "x"}], [{"id": "1"}], [{"id": 1, "name": "x"}],
+                     [{"id": "1", "name": "x"}] * 11, [{"id": "1", "name": "x", "ek": 1}]):
+            with self.assertRaises(reklam.Hata, msg=kotu):
+                kontrol([oge(ilgi=kotu)])
+
+    def test_ilgi_sabit(self):
+        durum = {"reklamlar": {"tanitim-1": {"plan": {"ilgi": [{"id": "1", "name": "a"}]}}}}
+        with self.assertRaisesRegex(reklam.Hata, "ilgi"):
+            kontrol([oge(ilgi=[{"id": "2", "name": "b"}])], durum)
+
+    def test_hedefleme_flexible_spec(self):
+        self.assertNotIn("flexible_spec", reklam.hedefleme(oge()))
+        t = reklam.hedefleme(oge(ilgi=[{"id": "6003", "name": "Quran"}]))
+        self.assertEqual(t["flexible_spec"], [{"interests": [{"id": "6003", "name": "Quran"}]}])
+        self.assertEqual(t["targeting_automation"], {"advantage_audience": 0})
+
     def test_durum_dosyasi_kimlik(self):
         with self.assertRaises(reklam.Hata):
             reklam.durum_dogrula({"reklamlar": {"a": {"plan": {}, "adset": "../x"}}})
