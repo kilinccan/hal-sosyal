@@ -1,5 +1,10 @@
 ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
 lansman-sarj-indir | PAUSED | 0.00 | - | - | - | -
-lansman-sarj-site | ACTIVE | 0.38 | 7 | - | - | -
+lansman-sarj-site | ACTIVE | 0.35 | 7 | - | - | -
 hesap toplam harcama 9.04 / 500 TL
-::error:: bütçe aşımı: harcanan 9.04 + kalan planlı 400.00 x 1.25 > 500 TL
+plan geçerli: 3 reklam
+lansman-sarj-site: PAUSED
+ios-mesaj-gorundu: oluşturuluyor (PAUSED)
+ios-mesaj-gorundu: ACTIVE
+ios-saat-0207: oluşturuluyor (PAUSED)
+ios-saat-0207: ACTIVE
