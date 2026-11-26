@@ -2,4 +2,4 @@ ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
 hesap toplam harcama 8.64 / 500 TL
 plan geçerli: 1 reklam
 lansman-sarj: oluşturuluyor (PAUSED)
-::error:: HTTP 400 act_***/adsets: code=100 Invalid parameter | subcode=1885272 | Bütçe Çok Düşük | alan=daily_budget
+::error:: HTTP 400 act_***/ads: code=100 Invalid parameter | subcode=2061015 | Zorunlu Alan Eksik
