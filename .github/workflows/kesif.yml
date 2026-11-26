@@ -1,0 +1,36 @@
+name: kesif
+on:
+  workflow_dispatch:
+    inputs:
+      etiket:
+        description: "virgülle etiketler (# olmadan; 7 günde en çok 30 farklı)"
+        default: "ayet,kuranmeali,günündüası,dua,ayetler,tefekkür"
+      tohum:
+        description: "virgülle başlangıç hesapları (isteğe bağlı)"
+        default: ""
+permissions:
+  contents: read
+concurrency:
+  group: ig-token
+  cancel-in-progress: false
+jobs:
+  kesif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: instagram # IG_TOKEN burada; dağıtım dalı yalnız main
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+      - run: |
+          set -eo pipefail
+          python -X utf8 kesif.py --etiket "$ETIKET" --tohum "$TOHUM" | tee -a "$GITHUB_STEP_SUMMARY"
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
+          ETIKET: ${{ inputs.etiket }}
+          TOHUM: ${{ inputs.tohum }}
