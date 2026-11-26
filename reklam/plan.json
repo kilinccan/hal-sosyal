@@ -1,9 +1,10 @@
 {
   "reklamlar": [
     {
-      "ad": "lansman-sarj",
+      "ad": "lansman-sarj-indir",
       "medya_id": "18416612587095014",
-      "hedef": "profil_ziyareti",
+      "hedef": "app_store",
+      "link": "https://apps.apple.com/tr/app/h%C3%A2l-ayet-dua-ve-kuran-meali/id6837715909",
       "gunluk_tl": 80,
       "baslangic": "2026-11-26",
       "bitis": "2026-11-27",
