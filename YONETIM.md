@@ -26,7 +26,7 @@ Hesap `@hal.uygulama`. HÂL: hâline uygun ayet/dua, reklamsız, veri toplamaz. 
 
 ## Reklam (toplam 500 TL, deneysel; `reklam/plan.json`, şema `reklam/plan.sema.md`)
 Her gün 07:30'da GitHub Actions planı Meta'ya uygular; sonuç `reklam/son.txt` (harcama, erişim, profil ziyareti, takip). Amaç hype: takipçi ve profil ziyareti (darboğaz: izleyen profile geçmiyor). Kod sınırları: harcanan + planlı ×1.25 ≤ 500, günlük toplam ≤ 100, reklam ≤ 7 gün, min 40 TL/gün, yalnız TR. Sınırı aşan plan tümden reddedilir, o gün boşa gider: planlamadan önce hesapla.
-- **Yayın günü reklamı (CEO, 26 Kas):** App Store yayında. Owner'ın kişisel hesaptan elle açtıkları (~213 TL: 204 test + 8 lansman, durduruldu) `son.txt`'te görünmez; gerçek kalan ~287 TL. `lansman-sarj` 26-28 Kas 50 TL/gün (planlı 150 ×1.25 = 187,5 ≤ 287). Bitene dek yeni reklam ekleme; 2. gün profil ziyareti başına maliyet 5 TL'yi aşarsa durdur (elle test: ~2,2 TL).
+- **Yayın günü reklamı (CEO, 26 Kas):** App Store yayında. Owner'ın kişisel hesaptan elle açtıkları (~213 TL: 204 test + 8 lansman, durduruldu) `son.txt`'te görünmez; gerçek kalan ~287 TL. `lansman-sarj` 26-27 Kas 80 TL/gün (Meta 50'yi 'bütçe çok düşük' diye reddetti; planlı 160 ×1.25 = 200 ≤ 287). Bitene dek yeni reklam ekleme; 2. gün profil ziyareti başına maliyet 5 TL'yi aşarsa durdur (elle test: ~2,2 TL).
 - **Gönderi seçimi:** yalnız organikte kanıtlanmış Reels: son 3 günde (kaydetme+paylaşım)/erişim oranı en yüksek; `medya_id` `rapor/son.txt`'teki sütundan. Altyazı reklamda değişmez, o yüzden Değişmez kurallara uyan gönderi.
 - **Yayın günü payı:** kullanıldı (`lansman-sarj`, 26 Kas).
 - Deneysel değişken her seferinde **tek**: gönderi, hedef (`etkilesim`/`erisim`) ya da yaş aralığı. Ne denediğini ve sonucunu NOTLAR'a sayıyla yaz.
