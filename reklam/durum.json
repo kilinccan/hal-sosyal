@@ -29,6 +29,25 @@
       "adset": "120251008336860176",
       "creative": "2036416533544281",
       "reklam": "120251008338320176",
+      "durum_meta": "PAUSED",
+      "harcama_tl": 0.0
+    },
+    "lansman-sarj-site": {
+      "plan": {
+        "medya_id": "18416612587095014",
+        "kuyruk": null,
+        "hedef": "app_store",
+        "baslangic": "2026-11-26",
+        "link": "https://kilinccan.github.io/hal/?k=ig",
+        "gunluk_tl": 80,
+        "bitis": "2026-11-27",
+        "durum": "aktif"
+      },
+      "medya": "18416612587095014",
+      "kampanya": "120251008628880176",
+      "adset": "120251008628950176",
+      "creative": "1696691965569398",
+      "reklam": "120251008629410176",
       "durum_meta": "ACTIVE"
     }
   }

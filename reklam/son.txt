@@ -1,5 +1,7 @@
 ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
+lansman-sarj-indir | ACTIVE | 0.00 | - | - | - | -
 hesap toplam harcama 8.64 / 500 TL
 plan geçerli: 1 reklam
-lansman-sarj-indir: oluşturuluyor (PAUSED)
-lansman-sarj-indir: ACTIVE
+lansman-sarj-site: oluşturuluyor (PAUSED)
+lansman-sarj-site: ACTIVE
+lansman-sarj-indir: planda yok, PAUSED
