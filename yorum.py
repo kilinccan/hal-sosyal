@@ -28,12 +28,12 @@ DESTEK = ("Yalnız değilsin. Kendine zarar vermeyi düşünüyorsan ya da çok 
 KRIZ = re.compile(
     r"intihar|suicide|\bkill myself|olmek (ist|en iyisi)|olmeyi ist|\bolsem|\bolum ist|umutsuz|dayanamiyo"
     r"|hayatim bitti|\bbittim\b|yok olmak|yok olsam|bilegimi|kendimi (oldur|kes|as|bitir|yak)"
-    r"|kendime zarar|yasamak ist|yasamak yorul|yasamak zor|hayatima son|canima kiy|yasamayi birak")
+    r"|kendime zarar|yasamak ist|yasamak yorul|yasamak zor|hayatima son|canima kiy|yasamayi birak|olup git|geber")
 SPAM = re.compile(r"http|www\.|\.com|\.net|\.ly\b|@|#|t\.me|\bdm\b")
 HAKARET = re.compile(
     r"\b(amk|aq|amina\w*|orospu\w*|siktir\w*|sikik\w*|sikeyim|yarrak\w*|yarak|pic|pezevenk|gavat|pust"
     r"|serefsiz|ibne|got\w*|salak|aptal|gerizekali|dangalak|oc|mal)\b")
-NEGASYON = re.compile(r"\bdegil")
+NEGASYON = re.compile(r"\bdegil|m[iu]yor|amiyor|emiyor")
 # Sıra önemli: ilk eşleşen ihtiyaç kazanır. Eşleşme yoksa cevap yok (genel liste yok).
 ANAHTAR = (
     ("yorgun", r"\b(yorgun|bitkin|tukendi|tukenmis|halsiz|bikti|usandi)"),
@@ -43,7 +43,7 @@ ANAHTAR = (
     ("yalniz", r"\b(yalniz|ozlem|ozled|tek basima|yapayalniz)"),
     ("sabir", r"\bsabir"),
     ("umut", r"\b(umut|umit|dilek|temenni)"),
-    ("sukur", r"\b(sukur|mutlu|huzurlu|minnet|iyiyim|iyi|sevin|nese|memnun|alhamdulillah|elhamdulillah)"),
+    ("sukur", r"\b(sukur|mutlu|huzurlu|minnet|iyiyim|iyi hissed|sevin|nese|memnun|alhamdulillah|elhamdulillah)"),
 )
 GIRIS = ("Hâline iyi gelsin:", "Sana bir ayet bırakalım:", "Gönlüne iyi gelsin:", "Bugün için bir ayet:")
 TR = str.maketrans("âîûöüşçğı", "aiuouscgi")
