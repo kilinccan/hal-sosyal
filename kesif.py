@@ -24,7 +24,7 @@ def etiket_adlari(etiket, token):
 def olc(ad, token):
     b = istek(f"{HESAP}?fields={urllib.parse.quote(ALAN.format(ad), safe='(),{}')}", token)["business_discovery"]
     medya = b.get("media", {}).get("data", [])
-    metin = (b.get("biography") or "") + " ".join(m.get("caption") or "" for m in medya)
+    metin = " ".join([b.get("biography") or ""] + [m.get("caption") or "" for m in medya])
     son = max((datetime.fromisoformat(m["timestamp"].replace("+0000", "+00:00")) for m in medya), default=None)
     ort = sum(m.get("like_count", 0) + m.get("comments_count", 0) for m in medya) / len(medya) if medya else 0
     return {"ad": b["username"], "takipci": b.get("followers_count", 0), "ort": ort,
@@ -40,12 +40,12 @@ def main():
     token = os.environ.get("IG_TOKEN", "")
     if not HESAP or not token:
         raise Hata("IG_USER_ID / IG_TOKEN tanımlı değil")
-    kuyruk = [t.strip().lstrip("@") for t in a.tohum.split(",") if t.strip()]
+    kuyruk = [t for t in (x.strip().lstrip("@") for x in a.tohum.split(",")) if re.fullmatch(r"[A-Za-z0-9_.]{2,30}", t)]
     for e in filter(None, (x.strip().lstrip("#") for x in a.etiket.split(","))):
         try:
             kuyruk += sorted(etiket_adlari(e, token))
         except (Hata, KeyError, IndexError) as ex:
-            print(f"::warning::#{e}: {temizle(ex)[:150]}")
+            print(f"::warning::#{e}: {temizle(ex)[:150]}".replace("\n", " "))
     goruldu, sonuc, olculmedi = set(), [], 0
     while kuyruk and len(goruldu) < MAX_OLCUM:
         ad = kuyruk.pop(0).lower().rstrip(".")
@@ -56,7 +56,7 @@ def main():
             h = olc(ad, token)
         except (Hata, KeyError) as ex:
             olculmedi += 1  # kişisel hesap ya da yok
-            if "rate" in str(ex).lower() or "(#4)" in str(ex) or "(#17)" in str(ex):
+            if any(k in str(ex).lower() for k in ("(#4)", "(#17)", "80004", "too many", "rate limit")):
                 print("::warning::istek sınırı; erken bitti")
                 break
             continue
