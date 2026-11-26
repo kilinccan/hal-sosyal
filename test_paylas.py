@@ -37,6 +37,16 @@ class PlanlaTest(unittest.TestCase):
         with self.assertRaisesRegex(paylas.Hata, "trial"):
             paylas.planla(kayit(trial="evet"), PAGES)
 
+    def test_carousel_alt(self):
+        plan = paylas.planla(kayit(tur="carousel", dosyalar=["a.png", "b.png"], alt=["bir", "iki"]), PAGES)
+        self.assertEqual([p[1].get("alt_text") for p in plan], ["bir", "iki", None])
+
+    def test_alt_hatalari(self):
+        for k in (kayit(alt=["x"]), kayit(tur="carousel", dosyalar=["a.png", "b.png"], alt=["x"]),
+                  kayit(tur="gorsel", dosyalar=["a.png"], alt=[""])):
+            with self.assertRaisesRegex(paylas.Hata, "alt"):
+                paylas.planla(k, PAGES)
+
 
 if __name__ == "__main__":
     unittest.main()
