@@ -152,7 +152,7 @@ def dogrula(plan, durum, bugun, harcanan):
         eski = durum["reklamlar"].get(ad)
         if eski:
             for k in SABIT:
-                if eski["plan"].get(k) != o.get(k):  # eski kayıtta olmayan alan (ilgi) sonradan eklenemez
+                if (k in eski["plan"] or k == "ilgi") and eski["plan"].get(k) != o.get(k):  # ilgi sonradan eklenemez
                     raise Hata(f"{ad}: {k} sonradan değişmez; yeni ad aç")
         elif o["durum"] == "aktif" and bit < bugun:
             raise Hata(f"{ad}: bitis geçmişte")
