@@ -26,3 +26,4 @@ jobs:
           python -X utf8 yorum.py
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
