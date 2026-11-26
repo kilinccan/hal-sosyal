@@ -23,7 +23,8 @@ KURUS = 100  # [Varsayım] TRY için bütçe birimi kuruş (1/100)
 #  etkilesim: OUTCOME_ENGAGEMENT + POST_ENGAGEMENT + ON_POST [Varsayım]
 #  erisim: OUTCOME_AWARENESS + REACH, destination_type yok [Varsayım]
 #  app_store: OUTCOME_TRAFFIC + LINK_CLICKS + WEBSITE; creative call_to_action DOWNLOAD + link (2061015 "link zorunlu" hatası
-#   profil_ziyareti'nde görüldü; IG gönderisi + call_to_action [Varsayım])
+#   profil_ziyareti'nde görüldü). Link kendi indirme sayfamız: Meta App Store linkini yalnız App Installs hedefinde kabul
+#   ediyor (26 Kas Delivery error); sayfadaki buton App Store'a gider.
 # [Varsayım] is_adset_budget_sharing_enabled=false (bütçe adset'te), targeting_automation.advantage_audience=0, campaigns?filtering EQUAL operatörü
 HEDEFLER = {
     "profil_ziyareti": ("OUTCOME_TRAFFIC", "PROFILE_VISIT", "INSTAGRAM_PROFILE"),
@@ -31,7 +32,7 @@ HEDEFLER = {
     "erisim": ("OUTCOME_AWARENESS", "REACH", None),
     "app_store": ("OUTCOME_TRAFFIC", "LINK_CLICKS", "WEBSITE"),
 }
-APP_STORE_RE = re.compile(r"^https://apps\.apple\.com/[a-z]{2}/app/[^\s?#]*id\d+(\?[A-Za-z0-9=&_.-]*)?$")
+APP_STORE_RE = re.compile(r"^https://kilinccan\.github\.io/hal/(\?[A-Za-z0-9=&_.-]*)?$")
 # Insights action_type adları [Varsayım]; bulunamazsa rapor "-" yazar
 EYLEMLER = {"profil": ("instagram_profile_visits", "profile_visit"), "takip": ("follow", "onsite_conversion.ig_follow"),
             "kaydetme": ("onsite_conversion.post_save", "post_save")}
@@ -133,7 +134,7 @@ def dogrula(plan, durum, bugun, harcanan):
         if (o["hedef"] == "app_store") != (link is not None):
             raise Hata(f"{ad}: link yalnız ve zorunlu olarak app_store hedefinde")
         if link is not None and (not isinstance(link, str) or not APP_STORE_RE.match(link)):
-            raise Hata(f"{ad}: link https://apps.apple.com/<ülke>/app/...id<sayı> olmalı")
+            raise Hata(f"{ad}: link indirme sayfası (https://kilinccan.github.io/hal/) olmalı")
         if o.get("durum") not in ("aktif", "durdur"):
             raise Hata(f"{ad}: durum aktif|durdur olmalı")
         tl = o.get("gunluk_tl")
