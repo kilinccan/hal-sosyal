@@ -1,4 +1,4 @@
-"""Meta reklam planını uzlaştırır. Kullanım: META_ADS_TOKEN=... AD_ACCOUNT_ID=... FB_PAGE_ID=... IG_USER_ID=... [VERI_KOKU=veri] python -X utf8 -I reklam.py [--kuru] [--rapor]
+"""Meta reklam planını uzlaştırır. Kullanım: META_ADS_TOKEN=... AD_ACCOUNT_ID=... FB_PAGE_ID=... IG_USER_ID=... [VERI_KOKU=veri] python -X utf8 -I reklam.py [--kuru] [--rapor] [--ilgi-ara ARAMA]
 Kod main'de, veri (reklam/plan.json, reklam/durum.json) VERI_KOKU altında (yayin dalı). Sert sınırlar aşağıdaki sabitlerdedir; aşan plan reddedilir, hiçbir şey oluşturulmaz.
 Sıra: rapor (harcama Meta'dan) -> plan doğrulama -> uzlaştırma. --rapor yalnız raporu yapar."""
 import argparse, json, os, re, sys, urllib.error, urllib.parse, urllib.request
@@ -41,7 +41,8 @@ AD_RE = re.compile(r"^[a-z0-9-]{3,40}$")
 SAYI_RE = re.compile(r"^\d+$")
 KUYRUK_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-\d{4}$")
 DEGISEBILIR = ("gunluk_tl", "bitis", "durum")
-SABIT = ("medya_id", "kuyruk", "hedef", "baslangic", "link")
+SABIT = ("medya_id", "kuyruk", "hedef", "baslangic", "link", "ilgi")
+ILGI_EN = 10
 KIMLIKLER = ("medya", "kampanya", "adset", "creative", "reklam")
 
 
@@ -146,10 +147,12 @@ def dogrula(plan, durum, bugun, harcanan):
         ymin, ymax = o.get("yas_min", 18), o.get("yas_max", 65)
         if not (isinstance(ymin, int) and isinstance(ymax, int) and 18 <= ymin <= ymax <= 65):
             raise Hata(f"{ad}: yaş aralığı 18-65 içinde olmalı")
+        if "ilgi" in o:
+            ilgi_dogrula(o["ilgi"], ad)
         eski = durum["reklamlar"].get(ad)
         if eski:
             for k in SABIT:
-                if k in eski["plan"] and eski["plan"][k] != o.get(k):
+                if (k in eski["plan"] or k == "ilgi") and eski["plan"].get(k) != o.get(k):  # ilgi sonradan eklenemez
                     raise Hata(f"{ad}: {k} sonradan değişmez; yeni ad aç")
         elif o["durum"] == "aktif" and bit < bugun:
             raise Hata(f"{ad}: bitis geçmişte")
@@ -165,6 +168,15 @@ def dogrula(plan, durum, bugun, harcanan):
             raise Hata(f"{g}: günlük toplam {t} TL > {GUNLUK_TOPLAM_TL} TL")
     if harcanan + kalan * ASIM_PAYI > BUTCE_TL:
         raise Hata(f"bütçe aşımı: harcanan {harcanan:.2f} + kalan planlı {kalan:.2f} x {ASIM_PAYI} > {BUTCE_TL:g} TL")
+
+
+def ilgi_dogrula(ilgi, ad):
+    if not isinstance(ilgi, list) or not 1 <= len(ilgi) <= ILGI_EN:
+        raise Hata(f"{ad}: ilgi 1-{ILGI_EN} öğeli liste olmalı")
+    for i in ilgi:
+        if not (isinstance(i, dict) and set(i) == {"id", "name"} and isinstance(i["name"], str) and i["name"].strip()):
+            raise Hata(f'{ad}: ilgi öğesi {{"id": "...", "name": "..."}} olmalı')
+        kimlik(i["id"], f"{ad}.ilgi.id")
 
 
 def durum_dogrula(durum):
@@ -183,9 +195,19 @@ def zaman(g, ertesi_gun=False):
 
 
 def hedefleme(o):
-    return {"geo_locations": {"countries": ["TR"]}, "age_min": o.get("yas_min", 18), "age_max": o.get("yas_max", 65),
+    t = {"geo_locations": {"countries": ["TR"]}, "age_min": o.get("yas_min", 18), "age_max": o.get("yas_max", 65),
             "publisher_platforms": ["instagram"], "device_platforms": ["mobile"], "user_os": ["iOS"],
             "targeting_automation": {"advantage_audience": 0}}
+    if o.get("ilgi"):
+        t["flexible_spec"] = [{"interests": [{"id": i["id"], "name": i["name"]} for i in o["ilgi"]]}]
+    return t
+
+
+def ilgi_ara(arama, token):
+    """Yalnız okur: Meta ilgi alanı kimliklerini listeler; plan.json'a elle kopyalanır."""
+    q = urllib.parse.urlencode({"type": "adinterest", "q": arama, "locale": "tr_TR", "limit": 25})
+    for d in istek(f"search?{q}", token).get("data", []):
+        print(temizle(f"{d.get('id')}	{d.get('name')}	{d.get('audience_size_lower_bound')}"))
 
 
 def medya_coz(o, ctx):
@@ -366,7 +388,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kuru", action="store_true", help="ağsız; yapılacak çağrıları yazdır")
     ap.add_argument("--rapor", action="store_true", help="yalnız rapor; durum.json'a harcamayı yazar")
+    ap.add_argument("--ilgi-ara", metavar="ARAMA", help="yalnız ilgi alanı kimliği ara; hiçbir şey oluşturmaz")
     a = ap.parse_args()
+    if a.ilgi_ara:
+        if not os.environ.get("META_ADS_TOKEN"):
+            raise Hata("META_ADS_TOKEN tanımlı olmalı")
+        ilgi_ara(a.ilgi_ara, os.environ["META_ADS_TOKEN"])
+        return 0
     durum = json.loads(DURUM.read_text(encoding="utf-8")) if DURUM.exists() else {"reklamlar": {}}
     durum_dogrula(durum)
     plan = json.loads(PLAN.read_text(encoding="utf-8"))
