@@ -12,6 +12,24 @@
       "kampanya": "120251008179620176",
       "adset": "120251008254880176",
       "creative": "1162891576544567"
+    },
+    "lansman-sarj-indir": {
+      "plan": {
+        "medya_id": "18416612587095014",
+        "kuyruk": null,
+        "hedef": "app_store",
+        "baslangic": "2026-11-26",
+        "link": "https://apps.apple.com/tr/app/h%C3%A2l-ayet-dua-ve-kuran-meali/id6837715909",
+        "gunluk_tl": 80,
+        "bitis": "2026-11-27",
+        "durum": "aktif"
+      },
+      "medya": "18416612587095014",
+      "kampanya": "120251008336450176",
+      "adset": "120251008336860176",
+      "creative": "2036416533544281",
+      "reklam": "120251008338320176",
+      "durum_meta": "ACTIVE"
     }
   }
 }
