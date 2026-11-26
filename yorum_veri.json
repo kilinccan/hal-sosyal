@@ -1,0 +1,260 @@
+{
+ "medyalar": [],
+ "ayetler": {
+  "yorgun": [
+   {
+    "sure": "Bakara",
+    "ayet": 153,
+    "meal": "Ey o bütün iman edenler sabr-ü salât ile yardım isteyin, şüphe yok ki Allah sabr edenlerle beraberdir"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 45,
+    "meal": "bir de sabır ile salât ile yardım isteyin, gerçi bu ağır gelir, fakat saygılı kimselere değil"
+   },
+   {
+    "sure": "Nisâ",
+    "ayet": 28,
+    "meal": "Allah sizden ağır teklifleri hafifletmek istiyor, öyle ya insan zaiyf yaradılmıştır"
+   },
+   {
+    "sure": "Âl-i İmrân",
+    "ayet": 139,
+    "meal": "Fütur getirmeyin ve mahzun olmayın daha yükselecekken sizler, gerçek mü'minlerseniz"
+   },
+   {
+    "sure": "Nahl",
+    "ayet": 127,
+    "meal": "Sabret, sabrın da ancak Allahın ınayetiledir, ve onlara karşı mahzun olma, yaptıkları mekirden telâş da etme"
+   }
+  ],
+  "kaygi": [
+   {
+    "sure": "Ra'd",
+    "ayet": 28,
+    "meal": "Onlar ki iman etmişlerdir ve kalbleri Allahın zikri ile yatışır, evet Allahın zikriyledir ki kalbler yatışır"
+   },
+   {
+    "sure": "Tâhâ",
+    "ayet": 46,
+    "meal": "Korkmayın buyurdu: çünkü ben sizinle beraberim, işitirim ve görürüm"
+   },
+   {
+    "sure": "Yûnus",
+    "ayet": 62,
+    "meal": "Uyan! ki Allahın evliyası ne üzerlerine korku vardır ne de onlar mahzun olurlar"
+   },
+   {
+    "sure": "Ahkāf",
+    "ayet": 13,
+    "meal": "Rabbımız Allah deyip de sonra doğru gidenler, her halde onlara bir korku yoktur ve onlar mahzun olmıyacaklardır"
+   },
+   {
+    "sure": "Ahzâb",
+    "ayet": 3,
+    "meal": "Ve Allaha tevekkül (ı'timad) kıl ki vekîl Allah yeter"
+   }
+  ],
+  "uzgun": [
+   {
+    "sure": "Duhâ",
+    "ayet": 3,
+    "meal": "veda' etmedi rabbın sana ve darılmadı"
+   },
+   {
+    "sure": "Duhâ",
+    "ayet": 5,
+    "meal": "ve ileride rabbın sana atâ edecek öyle atâ edecek ki rızaya ereceksin"
+   },
+   {
+    "sure": "Âl-i İmrân",
+    "ayet": 139,
+    "meal": "Fütur getirmeyin ve mahzun olmayın daha yükselecekken sizler, gerçek mü'minlerseniz"
+   },
+   {
+    "sure": "Şûrâ",
+    "ayet": 28,
+    "meal": "Ve öyledir ki o, ümidi kesmişlerken feyz indirir ve rahmetini neşr eder, o öyle veliy öyle hamîddir"
+   },
+   {
+    "sure": "Yûnus",
+    "ayet": 57,
+    "meal": "Ey insanlar işte size rabbınızdan bir mev'ıza ve gönüller derdine bir şifa, ve mü'minler için bir hidayet ve rahmet geldi"
+   }
+  ],
+  "ofke": [
+   {
+    "sure": "A'râf",
+    "ayet": 199,
+    "meal": "Sen afiv yolunu tut, urf ile emret ve kendilerini bilmezlerden sarfı nazar eyle"
+   },
+   {
+    "sure": "Şûrâ",
+    "ayet": 37,
+    "meal": "Ve onlar ki günahın büyüklerine ve açık çirkinliklere uzak bulunurlar ve her gadablandıkları vakıt da onlar kusur örterler"
+   },
+   {
+    "sure": "Meâric",
+    "ayet": 5,
+    "meal": "O halde sabret biraz bir sabri cemîl ile"
+   },
+   {
+    "sure": "Ra'd",
+    "ayet": 28,
+    "meal": "Onlar ki iman etmişlerdir ve kalbleri Allahın zikri ile yatışır, evet Allahın zikriyledir ki kalbler yatışır"
+   }
+  ],
+  "korku": [
+   {
+    "sure": "Tâhâ",
+    "ayet": 46,
+    "meal": "Korkmayın buyurdu: çünkü ben sizinle beraberim, işitirim ve görürüm"
+   },
+   {
+    "sure": "Yûnus",
+    "ayet": 62,
+    "meal": "Uyan! ki Allahın evliyası ne üzerlerine korku vardır ne de onlar mahzun olurlar"
+   },
+   {
+    "sure": "Ahkāf",
+    "ayet": 13,
+    "meal": "Rabbımız Allah deyip de sonra doğru gidenler, her halde onlara bir korku yoktur ve onlar mahzun olmıyacaklardır"
+   },
+   {
+    "sure": "Ahzâb",
+    "ayet": 3,
+    "meal": "Ve Allaha tevekkül (ı'timad) kıl ki vekîl Allah yeter"
+   }
+  ],
+  "yalniz": [
+   {
+    "sure": "Tâhâ",
+    "ayet": 46,
+    "meal": "Korkmayın buyurdu: çünkü ben sizinle beraberim, işitirim ve görürüm"
+   },
+   {
+    "sure": "Kâf",
+    "ayet": 16,
+    "meal": "Hem şanıma kasem ederim ki hakıkat insanı biz yarattık ve biliriz: nefsi onu ne ile vesveselendirir ve biz ona \"habli verîd\" den daha yakınızdır"
+   },
+   {
+    "sure": "Duhâ",
+    "ayet": 3,
+    "meal": "veda' etmedi rabbın sana ve darılmadı"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 115,
+    "meal": "Maamafih, meşrık de Allahın mağrib de, nerede yönelseniz orada Allaha durulacak cihet var, şüphe yok ki Allah vasi'dir alîmdir,"
+   },
+   {
+    "sure": "A'râf",
+    "ayet": 56,
+    "meal": "Yer yüzünü ifsad etmeyin ıslahından sonra da hem havf hem şevk ile ona kulluk edin, her halde Allahın rahmeti yakındır muhsinlere"
+   }
+  ],
+  "sabir": [
+   {
+    "sure": "Meâric",
+    "ayet": 5,
+    "meal": "O halde sabret biraz bir sabri cemîl ile"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 153,
+    "meal": "Ey o bütün iman edenler sabr-ü salât ile yardım isteyin, şüphe yok ki Allah sabr edenlerle beraberdir"
+   },
+   {
+    "sure": "Nahl",
+    "ayet": 127,
+    "meal": "Sabret, sabrın da ancak Allahın ınayetiledir, ve onlara karşı mahzun olma, yaptıkları mekirden telâş da etme"
+   },
+   {
+    "sure": "Lokmân",
+    "ayet": 17,
+    "meal": "Yavrum! namazı kıl, ma'rufu emir ve münkerden nehiy ve başına gelene sabr et, çünkü bunlar azmolunacak işlerdendir"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 45,
+    "meal": "bir de sabır ile salât ile yardım isteyin, gerçi bu ağır gelir, fakat saygılı kimselere değil"
+   }
+  ],
+  "umut": [
+   {
+    "sure": "Şûrâ",
+    "ayet": 28,
+    "meal": "Ve öyledir ki o, ümidi kesmişlerken feyz indirir ve rahmetini neşr eder, o öyle veliy öyle hamîddir"
+   },
+   {
+    "sure": "Duhâ",
+    "ayet": 5,
+    "meal": "ve ileride rabbın sana atâ edecek öyle atâ edecek ki rızaya ereceksin"
+   },
+   {
+    "sure": "A'râf",
+    "ayet": 56,
+    "meal": "Yer yüzünü ifsad etmeyin ıslahından sonra da hem havf hem şevk ile ona kulluk edin, her halde Allahın rahmeti yakındır muhsinlere"
+   },
+   {
+    "sure": "Nisâ",
+    "ayet": 110,
+    "meal": "Halbuki kim bir kötülük yapar veya nefsine zulm eder de sonra Allahın mağfiretine sığınırsa Allah bir gafur, rahîm bulur"
+   },
+   {
+    "sure": "Ankebût",
+    "ayet": 69,
+    "meal": "Bizim uğurumuzda mücahede edenlere gelince elbette biz onlara yollarımızı gösteririz ve şübhesiz ki Allah her halde muhsinlerle beraberdir"
+   }
+  ],
+  "sukur": [
+   {
+    "sure": "Nahl",
+    "ayet": 18,
+    "meal": "Halbuki Allahın ni'metini saysanız ihsâ edemezsiniz, her halde Allah çok gafûr, çok rahîmdir"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 152,
+    "meal": "o halde anın beni, anayım sizi ve şükredin de bana nankörlük etmeyin"
+   },
+   {
+    "sure": "Duhâ",
+    "ayet": 11,
+    "meal": "Fakat rabbının ni'metini anlat da anlat"
+   },
+   {
+    "sure": "Zümer",
+    "ayet": 66,
+    "meal": "Hayır, onun için yalnız Allaha kulluk et ve şükredenlerden ol"
+   }
+  ],
+  "genel": [
+   {
+    "sure": "Ra'd",
+    "ayet": 28,
+    "meal": "Onlar ki iman etmişlerdir ve kalbleri Allahın zikri ile yatışır, evet Allahın zikriyledir ki kalbler yatışır"
+   },
+   {
+    "sure": "Duhâ",
+    "ayet": 5,
+    "meal": "ve ileride rabbın sana atâ edecek öyle atâ edecek ki rızaya ereceksin"
+   },
+   {
+    "sure": "Tâhâ",
+    "ayet": 46,
+    "meal": "Korkmayın buyurdu: çünkü ben sizinle beraberim, işitirim ve görürüm"
+   },
+   {
+    "sure": "Şûrâ",
+    "ayet": 28,
+    "meal": "Ve öyledir ki o, ümidi kesmişlerken feyz indirir ve rahmetini neşr eder, o öyle veliy öyle hamîddir"
+   },
+   {
+    "sure": "Bakara",
+    "ayet": 153,
+    "meal": "Ey o bütün iman edenler sabr-ü salât ile yardım isteyin, şüphe yok ki Allah sabr edenlerle beraberdir"
+   }
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+[
+ {"id": "1001", "text": "Yorgunum", "username": "a", "timestamp": "2099-01-01T10:00:00+0000"},
+ {"id": "1002", "text": "kaygılı", "username": "b", "timestamp": "2099-01-01T10:01:00+0000"},
+ {"id": "1003", "text": "Kırgın", "username": "c", "timestamp": "2099-01-01T10:02:00+0000"},
+ {"id": "1004", "text": "Şükür", "username": "d", "timestamp": "2099-01-01T10:03:00+0000"},
+ {"id": "1005", "text": "ölmek istiyorum", "username": "e", "timestamp": "2099-01-01T10:04:00+0000"},
+ {"id": "1006", "text": "bak https://x.com/abc", "username": "f", "timestamp": "2099-01-01T10:05:00+0000"},
+ {"id": "1007", "text": "hmm", "username": "g", "timestamp": "2099-01-01T10:06:00+0000"}
+]
