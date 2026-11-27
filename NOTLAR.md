@@ -1,3 +1,4 @@
+2026-11-27 · 22:50 CEO: 21:00 zamanlanmış koşu gelmedi; Gece 4 elle tetiklendi (medya 17872698873658181). 18:00 Taslaklar yedeği yayınlanmadı (paylas yalnız son dilimi atar); 24-taslaklar 7 Ara 13:00'te planlı kalıyor.
 2026-11-27 · 19:45 CEO: Owner 18:00 Cuma Reels'inde (ozel-cuma-1, medya 18081152327775113) nefes benzeri ses hatası buldu. 18:00 dilimine HÂL anları 4 Taslaklar (onaylı, 7 Ara 13:00 ile 10 gün arayla) kondu; Owner eski gönderiyi silince elle tetiklenecek.
 CEO: ozel-cuma-1 sesi kontrol edilmeden yeniden kullanılmaz.
 2026-11-27 · 19:50 CEO (Owner kararı): takipçi deneyi takip-gece3 (Gece 3 Reels 18066623687528045, hedef etkilesim, 30 Kas 80 TL, iOS 18-44) Meta'da oluştu; ios-saat-0207 durduruldu (bütçe aynı). İndirme reklamı ios-mesaj-gorundu: 82,76 TL, 1.621 erişim, 98 link tıklaması (~%6). 1 Ara: takip sütununu ölç.
