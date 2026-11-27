@@ -34,6 +34,17 @@
       "bitis": "2026-11-30",
       "yas_min": 18,
       "yas_max": 44,
+      "durum": "durdur"
+    },
+    {
+      "ad": "takip-gece3",
+      "medya_id": "18066623687528045",
+      "hedef": "etkilesim",
+      "gunluk_tl": 80,
+      "baslangic": "2026-11-30",
+      "bitis": "2026-11-30",
+      "yas_min": 18,
+      "yas_max": 44,
       "durum": "aktif"
     }
   ]
