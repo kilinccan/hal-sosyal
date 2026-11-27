@@ -39,6 +39,7 @@
         "hedef": "app_store",
         "baslangic": "2026-11-26",
         "link": "https://kilinccan.github.io/hal/?k=ig",
+        "ilgi": null,
         "gunluk_tl": 80,
         "bitis": "2026-11-27",
         "durum": "durdur"
@@ -49,7 +50,7 @@
       "creative": "1696691965569398",
       "reklam": "120251008629410176",
       "durum_meta": "PAUSED",
-      "harcama_tl": 0.35
+      "harcama_tl": 0.64
     },
     "ios-mesaj-gorundu": {
       "plan": {
@@ -58,8 +59,9 @@
         "hedef": "app_store",
         "baslangic": "2026-11-27",
         "link": "https://kilinccan.github.io/hal/?k=ios1",
+        "ilgi": null,
         "gunluk_tl": 80,
-        "bitis": "2026-11-29",
+        "bitis": "2026-11-28",
         "durum": "aktif"
       },
       "medya": "18129606712808148",
@@ -67,7 +69,8 @@
       "adset": "120251010226650176",
       "creative": "1577815477483035",
       "reklam": "120251010228280176",
-      "durum_meta": "ACTIVE"
+      "durum_meta": "ACTIVE",
+      "harcama_tl": 33.11
     },
     "ios-saat-0207": {
       "plan": {
@@ -76,6 +79,7 @@
         "hedef": "app_store",
         "baslangic": "2026-11-30",
         "link": "https://kilinccan.github.io/hal/?k=ios2",
+        "ilgi": null,
         "gunluk_tl": 80,
         "bitis": "2026-11-30",
         "durum": "aktif"
@@ -85,7 +89,8 @@
       "adset": "120251010229810176",
       "creative": "1502446695180626",
       "reklam": "120251010231010176",
-      "durum_meta": "ACTIVE"
+      "durum_meta": "ACTIVE",
+      "harcama_tl": 0.0
     }
   }
 }
