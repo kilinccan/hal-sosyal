@@ -34,7 +34,7 @@ HEDEFLER = {
 }
 APP_STORE_RE = re.compile(r"^https://kilinccan\.github\.io/hal/(\?[A-Za-z0-9=&_.-]*)?$")
 # Insights action_type adları [Varsayım]; bulunamazsa rapor "-" yazar
-EYLEMLER = {"profil": ("instagram_profile_visits", "profile_visit"), "takip": ("follow", "onsite_conversion.ig_follow"),
+EYLEMLER = {"tiklama": ("link_click",), "profil": ("instagram_profile_visits", "profile_visit"), "takip": ("follow", "onsite_conversion.ig_follow"),
             "kaydetme": ("onsite_conversion.post_save", "post_save")}
 
 AD_RE = re.compile(r"^[a-z0-9-]{3,40}$")
@@ -336,7 +336,7 @@ def hesap_harcamasi(ctx):
 
 def rapor(durum, ctx, kaydet):
     """Hesabın toplam harcamasını (sınırın tek kaynağı) döndürür; reklam başına satırlar bilgi amaçlı."""
-    print("ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme")
+    print("ad | durum | harcama TL | erişim | link tıklaması | profil ziyareti | takip | kaydetme")
     for ad, k in durum["reklamlar"].items():
         if "reklam" not in k:
             continue
@@ -344,7 +344,7 @@ def rapor(durum, ctx, kaydet):
         s = veri[0] if veri else {}
         k["harcama_tl"] = float(s.get("spend", 0))
         print(" | ".join(str(x) for x in (ad, k.get("durum_meta"), f"{k['harcama_tl']:.2f}", s.get("reach", "-"),
-              eylem(s, EYLEMLER["profil"]), eylem(s, EYLEMLER["takip"]), eylem(s, EYLEMLER["kaydetme"]))))
+              eylem(s, EYLEMLER["tiklama"]), eylem(s, EYLEMLER["profil"]), eylem(s, EYLEMLER["takip"]), eylem(s, EYLEMLER["kaydetme"]))))
     toplam = hesap_harcamasi(ctx)
     print(f"hesap toplam harcama {toplam:.2f} / {BUTCE_TL:g} TL")
     kaydet()
