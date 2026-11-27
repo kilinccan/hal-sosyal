@@ -82,15 +82,34 @@
         "ilgi": null,
         "gunluk_tl": 80,
         "bitis": "2026-11-30",
-        "durum": "aktif"
+        "durum": "durdur"
       },
       "medya": "17894241930621157",
       "kampanya": "120251010229670176",
       "adset": "120251010229810176",
       "creative": "1502446695180626",
       "reklam": "120251010231010176",
-      "durum_meta": "ACTIVE",
+      "durum_meta": "PAUSED",
       "harcama_tl": 0.0
+    },
+    "takip-gece3": {
+      "plan": {
+        "medya_id": "18066623687528045",
+        "kuyruk": null,
+        "hedef": "etkilesim",
+        "baslangic": "2026-11-30",
+        "link": null,
+        "ilgi": null,
+        "gunluk_tl": 80,
+        "bitis": "2026-11-30",
+        "durum": "aktif"
+      },
+      "medya": "18066623687528045",
+      "kampanya": "120251022628620176",
+      "adset": "120251022628790176",
+      "creative": "1174397545121113",
+      "reklam": "120251022629920176",
+      "durum_meta": "ACTIVE"
     }
   }
 }
