@@ -1,7 +1,7 @@
-ad | durum | harcama TL | erişim | profil ziyareti | takip | kaydetme
-lansman-sarj-indir | PAUSED | 0.00 | - | - | - | -
-lansman-sarj-site | PAUSED | 0.64 | 23 | - | - | -
-ios-mesaj-gorundu | ACTIVE | 80.27 | 1510 | - | - | -
-ios-saat-0207 | ACTIVE | 0.00 | - | - | - | -
-hesap toplam harcama 89.70 / 500 TL
+ad | durum | harcama TL | erişim | link tıklaması | profil ziyareti | takip | kaydetme
+lansman-sarj-indir | PAUSED | 0.00 | - | - | - | - | -
+lansman-sarj-site | PAUSED | 0.64 | 23 | - | - | - | -
+ios-mesaj-gorundu | ACTIVE | 82.76 | 1621 | 98 | - | - | -
+ios-saat-0207 | ACTIVE | 0.00 | - | - | - | - | -
+hesap toplam harcama 92.19 / 500 TL
 plan geçerli: 3 reklam
