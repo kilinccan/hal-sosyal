@@ -70,7 +70,7 @@
       "creative": "1577815477483035",
       "reklam": "120251010228280176",
       "durum_meta": "ACTIVE",
-      "harcama_tl": 82.76
+      "harcama_tl": 132.98
     },
     "ios-saat-0207": {
       "plan": {
@@ -109,7 +109,8 @@
       "adset": "120251022628790176",
       "creative": "1174397545121113",
       "reklam": "120251022629920176",
-      "durum_meta": "ACTIVE"
+      "durum_meta": "ACTIVE",
+      "harcama_tl": 0.0
     }
   }
 }
