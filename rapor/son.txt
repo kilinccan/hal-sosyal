@@ -1,17 +1,19 @@
-hesap hal.uygulama: 17 takipçi, 0 takip, 12 gönderi
+hesap hal.uygulama: 19 takipçi, 0 takip, 14 gönderi
 bio: "Bugün nasılsın? Hâline uygun bir ayet, her gün 🌱 / Kaydet, sevdiğine gönder / Reklamsız · Veri toplamaz / App Store'da 👇"
-son 7 gün: reach=14363, profile_views=161, accounts_engaged=709
+son 7 gün: reach=14978, profile_views=165, accounts_engaged=656
 tarih | tür | beğeni | yorum | erişim | izlenme | kaydetme | paylaşım | ort. izleme sn | medya_id | başlık
-2026-11-27T01:42 | REELS | 6 | 0 | 206 | 230 | 3 | 0 | 5.0 | 18066623687528045 | Söylediğin bir söz aklından çıkmıyor mu?
-2026-11-26T16:49 | FEED | 2 | 0 | 6 | 23 | 0 | 0 | - | 18429939415155519 | Bu akşam hangisisin? Kaydır, numaranı yo
-2026-11-26T01:45 | REELS | 2 | 0 | 170 | 188 | 1 | 0 | 3.5 | 18271992049305841 | Yarını düşünmeden duramıyor musun?
-2026-11-25T10:14 | REELS | 20 | 0 | 915 | 1000 | 1 | 6 | 4.4 | 18416612587095014 | Şarjın mı %3'te, sen mi?
-2026-11-25T07:58 | REELS | 3 | 0 | 125 | 140 | 0 | 0 | 4.0 | 18120267983325773 | Bugün nasılsın?
-2026-11-24T18:52 | REELS | 26 | 0 | 1134 | 1348 | 10 | 2 | 5.2 | 17894241930621157 | Saat 02:07 ve kafandaki ses susmuyor mu?
-2026-11-24T10:26 | REELS | 16 | 0 | 1331 | 1490 | 2 | 2 | 4.3 | 17966084214215854 | Biri bitmeden öbürü geliyor. Bugün de mi
-2026-11-23T20:02 | REELS | 14 | 0 | 1370 | 1471 | 1 | 2 | 3.6 | 18100254926121169 | Pazartesi sabahı ruhum hâlâ pazar. Senin
-2026-11-22T17:06 | REELS | 10 | 0 | 724 | 791 | 1 | 2 | 3.5 | 18484715104112524 | Gece 1'de yarının listesi bitmiyorsa, bu
-2026-11-22T11:59 | REELS | 51 | 0 | 1390 | 1553 | 13 | 8 | 6.1 | 18129606712808148 | Mesajın görüldü, cevap gelmedi mi?
-2026-11-21T20:35 | REELS | 5 | 1 | 1109 | 1210 | 1 | 1 | 1.9 | 17928630675204317 | Bugün nasılsın? Hâlini seç, sana uygun a
-2026-11-21T19:54 | REELS | 40 | 0 | 1503 | 1729 | 22 | 6 | 3.6 | 18103156094562042 | Bugün nasılsın? Hâline göre bir ayet bır
-2026-11-27T13:02Z
+2026-11-28T10:37 | REELS | 1 | 0 | 2 | 126 | 0 | 0 | 2.4 | 18142141264730273 | Gönderemediğin kaç taslak var?
+2026-11-27T19:48 | REELS | 2 | 0 | 56 | 69 | 0 | 0 | 3.2 | 17872698873658181 | Telefon hâlâ sessiz mi?
+2026-11-27T01:42 | REELS | 7 | 0 | 211 | 235 | 3 | 0 | 5.0 | 18066623687528045 | Söylediğin bir söz aklından çıkmıyor mu?
+2026-11-26T16:49 | FEED | 2 | 0 | 9 | 26 | 0 | 0 | - | 18429939415155519 | Bu akşam hangisisin? Kaydır, numaranı yo
+2026-11-26T01:45 | REELS | 2 | 0 | 174 | 190 | 1 | 0 | 3.5 | 18271992049305841 | Yarını düşünmeden duramıyor musun?
+2026-11-25T10:14 | REELS | 21 | 0 | 920 | 1004 | 1 | 6 | 4.4 | 18416612587095014 | Şarjın mı %3'te, sen mi?
+2026-11-25T07:58 | REELS | 3 | 0 | 128 | 143 | 0 | 0 | 3.9 | 18120267983325773 | Bugün nasılsın?
+2026-11-24T18:52 | REELS | 26 | 0 | 1140 | 1352 | 10 | 2 | 5.2 | 17894241930621157 | Saat 02:07 ve kafandaki ses susmuyor mu?
+2026-11-24T10:26 | REELS | 16 | 0 | 1331 | 1493 | 2 | 2 | 4.4 | 17966084214215854 | Biri bitmeden öbürü geliyor. Bugün de mi
+2026-11-23T20:02 | REELS | 14 | 0 | 1372 | 1472 | 1 | 2 | 3.6 | 18100254926121169 | Pazartesi sabahı ruhum hâlâ pazar. Senin
+2026-11-22T17:06 | REELS | 10 | 0 | 725 | 792 | 1 | 2 | 3.5 | 18484715104112524 | Gece 1'de yarının listesi bitmiyorsa, bu
+2026-11-22T11:59 | REELS | 51 | 0 | 1392 | 1554 | 13 | 8 | 6.0 | 18129606712808148 | Mesajın görüldü, cevap gelmedi mi?
+2026-11-21T20:35 | REELS | 5 | 1 | 1111 | 1212 | 1 | 1 | 2.0 | 17928630675204317 | Bugün nasılsın? Hâlini seç, sana uygun a
+2026-11-21T19:54 | REELS | 41 | 0 | 1505 | 1731 | 22 | 6 | 3.6 | 18103156094562042 | Bugün nasılsın? Hâline göre bir ayet bır
+2026-11-28T12:15Z
